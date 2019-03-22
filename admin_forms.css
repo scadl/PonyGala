@@ -1,0 +1,41 @@
+		@font-face{
+			font-family:CelestiaRedux;
+			src: url(CelestiaMediumRedux1.55.ttf);
+		}
+        td{
+            text-align: center;
+            font-family: sans-serif;
+            padding: 10px;
+			border-radius:5px;
+			background: #eee;
+        }
+        a:link{
+            color: #000;
+            text-decoration: none;
+        }
+        a:visited{
+            color: #000;
+            text-decoration: none
+        }
+        a:hover{
+            color: blue;
+            text-decoration: none;
+        }
+		.subdesc{
+			font-size:10pt;
+		}
+		.desc-nm{
+			font-size:12pt;
+			font-weight:bold;
+		}
+		.desc-gr{
+			color:#999;
+		}
+		.tech_lab{
+			background:#eee;
+			border-radius:5px;
+			font-family: sans-serif;
+		}
+		input, select{
+			border: solid 1px #bbb;
+		}
