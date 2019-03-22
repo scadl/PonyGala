@@ -1,0 +1,75 @@
+@font-face{
+    font-family:CelestiaRedux;
+    src: url(CelestiaMediumRedux1.55.ttf);
+}
+.cellstyle{
+    width: 250px;
+    height:325px;
+    display:inline-block;
+    text-align: center;
+    font-family: sans-serif;
+    padding: 5px;
+    padding-bottom: 15px;
+    border-radius: 5px;
+    background: #ccc;     
+    margin: 5px;     
+}
+a:link{
+    color: #000;
+    text-decoration: none;
+}
+a:visited{
+    color: #000;
+    text-decoration: none
+}
+a:hover{
+    color: grey;
+    text-decoration: none;
+}
+.subdesc{
+    font-size:10pt;
+}
+.desc-nm{
+    font-size:12pt;
+    font-weight:bold;
+    text-align: center;
+    padding: 10px 15px;
+}
+.desc-gr{
+    color:#999;
+}
+.tech_lab{
+    background:#eee;
+    border-radius:5px;
+    font-family: sans-serif;
+    height: 20px;
+}
+#head_link :hover{
+    color:black;
+}
+.block_tmb{
+    width: 240px;
+    height: 250px;
+    overflow: hidden;
+}
+.block_tmb img{
+    border: 3px solid white;
+    position: relative;
+    background: #eee;
+    border-radius: 5px;
+}
+.footer_txt{
+    font-family: sans-serif;
+}
+.btn_left{
+    display: inline-block;
+    margin-left: 5px;
+}
+.btn_right{
+    display: inline-block;
+    margin-right: 5px;
+    padding: 5px;
+}
+.divider{
+    border-right:#fff 3px solid
+}

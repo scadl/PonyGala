@@ -1,0 +1,128 @@
+/* 
+    Created on : 01.05.2018, 18:36:10
+    Author     : scad
+*/
+
+@font-face{
+    font-family:CelestiaRedux;
+    src: url(CelestiaMediumRedux1.55.ttf);
+}
+@font-face{
+    font-family:RateSegoeUI;
+    src: url(segoeuil.ttf);
+}
+@font-face{
+    font-family:SymbolWebdings;
+    src: url(WINGDNG2.TTF);
+}
+.glow{
+    color:black; 
+    font-size:13pt; 
+    font-weight:bold; 
+    text-shadow: 1px 1px 2px white, -1px -1px 2px white, 1px -1px 2px white, -1px 1px 2px white;
+}
+.thumb-frame{
+    height:300px;
+    width:210px;
+    background:#ccc;
+    float: left;
+    border-radius: 15px;
+    border:#AAA 2px solid;
+    padding:5px;
+}
+.thumb{
+    border-radius:15px;
+    padding: 15px 0px;
+    width:200px; 
+    height:200px; 
+    object-fit: scale-down;
+    /* border:#777 3px solid; */
+    filter:
+    /*  Each shadow becomes part of the image and the next filter
+        adds a shadow beneath it, so we have to be very careful. */
+        drop-shadow(0 -3px 0 gray)
+        drop-shadow(0 3px 0 gray)
+        drop-shadow(-3px 0 0 gray)
+        drop-shadow(3px 0 0 gray);
+}
+#thumb-wd{
+    width: 200px;
+}
+#thumb-hg{
+    height: 200px;
+}
+.thumb-lab{
+    width:200px;
+    padding:3px;
+    font-weight:500;
+}
+.thum-auth{
+    font-size:9pt;
+    font-weight:200;
+}
+.thum-date{
+    font-size: 7pt; 
+    font-style: italic;
+    font-family: sans-serif;
+}
+
+.vote_panel_light{
+    background:#bbb;
+    opacity: 0.6;
+    border-radius:0px 0px 10px 10px;
+    box-shadow: 0 0 5px #bbb;
+    z-index:3;
+    position:relative;
+}
+.vote_panel_dark{
+    background: rgb(153, 153, 153); 
+    opacity: 0.9;
+    color: #000; 
+    border-radius:0px 0px 10px 10px;
+    border-top:solid 1.5px #aaa; 
+    border-bottom:solid 2px #aaa;
+    position:relative;
+    top: 3px;
+}
+a:link{
+    color:#000;
+    text-decoration:none;
+}
+a:hover{
+    color:#eee;
+    text-decoration:none;
+}
+a:visited{
+    color:#000;
+    text-decoration:none;
+}
+.pgs{
+    background:#ddd; 
+    padding:5px; 
+    margin:5px; 
+    border-radius:5px;
+    font-family: sans-serif;
+    text-align:center;
+    display: inline-block;
+    border: solid 2px #eee;
+    width: 25%
+}
+.pgsl{
+    background:#bbb; 
+    padding:5px; 
+    margin:5px; 
+    border-radius:5px;
+    font-family: sans-serif;
+    text-align:center;
+    float:left;
+    display: block;
+    font-weight: bold;
+    border: solid 1px #aaa;
+}
+.pbSecR{
+    background:#765959;
+}
+
+.selected{
+    background: grey;
+}
