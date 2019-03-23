@@ -3,7 +3,11 @@
 if (file_exists('./config.php' )){
     require './config.php';
 } else {
-    die('config.php - не найден. Проверьте целостность репозитория');
+	if (file_exists('./../config.php' )){
+		require './../config.php';
+	} else {
+		die('config.php - не найден. Проверьте целостность репозитория');
+	}
 }
 
 // DB Connection init

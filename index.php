@@ -214,7 +214,13 @@ ini_set('display_errors', 1);
                                 <a href='https://twitter.com/Bronies4PDA' target="_blank">
                                     <img src="img/twitter.png" width="20" border="0" >
                                 </a>
-                            </span>	                            
+                            </span>	      
+
+                            <span class="tech_lab btn_right" title="Хочешь свою галерею? Присоединяйся - вместе, значит лучше!" style="cursor:pointer;">
+                                <a href='https://github.com/scadl/PonyGala' target="_blank">
+                                    <img src="img/GitHub-Mark-32px.png" width="20" border="0" >
+                                </a>
+                            </span>	  							
 
                             <span class="tech_lab btn_right" title="Архив артов 09.2013 - 09.2014" style="cursor:pointer;">
                                 <a href="https://cloud.mail.ru/public/LvnN/CdvGjpMnM" target="_blank">
