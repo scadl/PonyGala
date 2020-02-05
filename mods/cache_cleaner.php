@@ -42,16 +42,16 @@
             <span style='font-family:CelestiaRedux;'>
                 <span style='font-size:45pt;'>Big PonyArt Gallery</span><span style='font-size:8pt;'>v2</span><br>
                 <span style='font-size:17pt;'>ArtCache Cleaner - Report</span> <br>
-            </span>
+            </span> 
 
-            <script type="text/javascript">
-                var arts_arr = "";
-                var caIntInd = 0;
-                var stats = [0, 0, 0, 0, 0, 0];
+            <script type="text/javascript">                
+                var daToken = "";
+                var stats = {'title':0, 'file':0, 'thumb':0, 'page':0, 'author':0, 'delete':0};
 
-                function CacheCheck() {
+                function CacheCheck(arts_arr, caIntInd) {
 
-                    if (caIntInd <= arts_arr.length) {
+                    if (caIntInd <= arts_arr.length-1) {
+                    //if (caIntInd <= 5) {
 
                         //document.getElementById("status").innerHTML="<i>Проверяю кэш...</i>";
 
@@ -62,32 +62,41 @@
                                     case 200:
 
                                         var resps = JSON.parse(ajcheck.responseText);
-                                        for (var key in resps) {
-                                            stats[key] += resps[key];
+                                        for (var key in resps['states']) {
+                                            stats[key] += Number(resps['states'][key]);
+                                            //console.log(key+" "+stats[key]+" "+resps['states'][key]);
+                                        }                                     
+
+                                        document.getElementById("status").innerHTML = "<b>" + arts_arr.length + " arts</b>";
+                                        document.getElementById("progres").innerHTML = "<b>" + caIntInd + " ch.k</b>";
+
+                                        document.getElementById("ttl").innerHTML = stats['title'];
+                                        document.getElementById("fnm").innerHTML = stats['file'];
+                                        document.getElementById("tmb").innerHTML = stats['thumb'];
+                                        document.getElementById("dap").innerHTML = stats['page'];
+                                        document.getElementById("auth").innerHTML = stats['author'];
+                                        document.getElementById("del").innerHTML = stats['delete'];
+
+                                        if(resps['message']=='' || resps['message']=='dA OK!'){
+                                            daToken = resps['token'];
+                                            CacheCheck(arts_arr, caIntInd+1);
+                                        } else if (resps['message']=='dA Refresh!') {
+                                            daToken = resps['token'];
+                                            CacheCheck(arts_arr, caIntInd);
+                                        } else {
+                                            alert(resps['message']);
                                         }
-
-                                        document.getElementById("status").innerHTML = "<b>" + (((caIntInd * 100) / arts_arr.length).toFixed(2)) + "% </b>";
-                                        
-                                        document.getElementById("ttl").innerHTML = stats[0];
-                                        document.getElementById("fnm").innerHTML = stats[1];
-                                        document.getElementById("tmb").innerHTML = stats[2];
-                                        document.getElementById("dap").innerHTML = stats[3];
-                                        document.getElementById("auth").innerHTML = stats[4];
-                                        document.getElementById("del").innerHTML = stats[5];
-
-                                        caIntInd++;
-                                        CacheCheck();
 
                                         break;
                                     default:
-                                        document.getElementById("status").innerHTML = "<span style='color:red'>Ошибка при чтении кэша\n № ошибки: " 
+                                        document.getElementById("status").innerHTML = "<span style='color:red'>Ошибка при чтении кэша\n № ошибки: "
                                                 + ajcheck.status + ", " + ajcheck.statusText + " </span>";
                                         break;
                                 }
                             }
                         }
-                        
-                        ajcheck.open('GET', 'cache_processor.php?mode=1&check=' + arts_arr[caIntInd]);
+
+                        ajcheck.open('GET', 'cache_processor.php?mode=1&art=' + arts_arr[caIntInd]+'&token='+daToken);
                         ajcheck.send(null);
 
                     } else {
@@ -95,7 +104,7 @@
                     }
                 }
 
-                function AjGetList() {
+                function AjGetList() { 
 
                     document.getElementById("status").innerHTML = "<i>Читаю кэш...</i>";
 
@@ -105,21 +114,29 @@
                             switch (ajfeed.status) {
                                 case 200:
 
-                                    arts_arr = "";
-                                    arts_arr = ajfeed.responseText.split('|');
+                                    system_repsose = "";
 
-                                    document.getElementById("status").innerHTML = "<i>Кэш загружен</i>";
-                                    //document.getElementById("log").innerHTML = arts_arr.length;
+                                    document.getElementById("status").innerHTML = "<i>Кэш загр.</i>";
 
-                                    caIntInd = 0;
-                                    CacheCheck();
-                                    document.getElementById("status").innerHTML = "<i>Проверяю кэш...</i>";
+                                    system_repsose = JSON.parse(ajfeed.responseText);
+                                    if(system_repsose['token']){
+                                        
+                                        //alert(system_repsose['token']);                                        
+                                        daToken = system_repsose['token'];
+                                        CacheCheck(system_repsose['arts_id'], 0);
+                                        
+                                    } else{
+                                        
+                                        alert(system_repsose['expires']);
+                                    }                                 
+                                   
+                                    document.getElementById("status").innerHTML = "<i>Проверяю</i>";
                                     document.getElementById("btnControl").disabled = true;
-                                    //document.getElementById("indb").innerHTML = arts_arr.length;
+
                                     break;
-                                    
+
                                 default:
-                                    document.getElementById("status").innerHTML = "<span style='color:red'>Ошибка при чтении кэша\n № ошибки: " 
+                                    document.getElementById("status").innerHTML = "<span style='color:red'>Ошибка при чтении кэша\n № ошибки: "
                                             + ajfeed.status + ", " + ajfeed.statusText + " </span>";
                                     break;
                             }
@@ -133,6 +150,7 @@
             <br>
             <table width="200">
                 <tr style="font-size:9pt; color:blue"><td width="70">Status: </td><td> <span id='status'>...</span> </td></tr>
+                <tr style="font-size:9pt; color:blue"><td>Scanned: </td><td> <span id='progres'>0</span> </td></tr>
                 <tr style="font-size:9pt; color:green"><td>Titles fixed: </td><td> <span id='ttl'>0</span> </td></tr>
                 <tr style="font-size:9pt; color:green"><td>FilNames fixed: </td><td> <span id='fnm'>0</span> </td></tr>	
                 <tr style="font-size:9pt; color:green"><td>Thumbnails fixed: </td><td> <span id='tmb'>0</span> </td></tr>

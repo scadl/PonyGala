@@ -1,95 +1,182 @@
 <?php
+
 require './../db_init.php';
 
-function ParseName($thumb)
-{
+function daTokenGet() {
 
-    $srcfnm = str_replace("_", " ", $thumb);
-    $strlen = strlen($srcfnm);
+    global $da_client, $da_secret;
+    $response = array();
 
-    $possl = strripos($srcfnm, '/');
-    $posby = stripos($srcfnm, 'by');
-    $posmn = strripos($srcfnm, '-');
+    // Create a stream
+    $opts = [
+        'http' => [
+            'method' => 'GET',
+            'header' => implode("\n", ['Accept-Encoding: gzip,deflate', 'User-Agent: ' . $_SERVER['HTTP_USER_AGENT']]),
+        ]
+    ];
+    $json_ask = "https://www.deviantart.com/oauth2/token?grant_type=client_credentials&client_id=" . $da_client . "&client_secret=" . $da_secret;
 
-    $aunmf = substr($srcfnm, $posby);
-
-    $nameln = $posby - $possl - 2;
-    $autnln = $posmn - $posby - 3;
-
-    $nanmst = substr($srcfnm, $possl + 1, $nameln);
-    $autnnm = substr($srcfnm, $posby + 3, $autnln);
-
-    if ($nanmst == "") {
-        $nanmst = "DigitalArt N" . rand(0, 150);
-        $autnnm = "unknown_author_" . rand(0, 1000);
+    try {
+        $context = stream_context_create($opts);
+        $content = @file_get_contents($json_ask, false, $context);
+        if ($content) {
+            $json_response = json_decode($content, true);
+            if (isset($json_response['error'])) {
+                $response['expires'] = $content['error_description'];
+                $response['token'] = false;
+            } else {
+                $response['expires'] = $json_response['expires_in'];
+                $response['token'] = $json_response['access_token'];
+            }
+        } else {
+            $response['expires'] = "Error in understanding API response";
+            $response['token'] = false;
+        }
+    } catch (Exception $e) {
+        $response['expires'] = "Error in sendind API request";
+        $response['token'] = false;
     }
 
-    $output['title'] = $nanmst;
-    $output['author'] = $autnnm;
-    $output['da_page'] = "http://" . str_replace(" ", "-", $autnnm) . ".deviantart.com/";
-
-    return $output;
+    return $response;
 }
 
 switch ($_GET['mode']) {
     case 0:
 
-        $artq = mysqli_query($link, "SELECT aid FROM arts_pub");
-        while ($row = mysqli_fetch_array($artq, MYSQLI_ASSOC)) {
-            print($row['aid'] . '|');
+        $response = array();
+        $response = daTokenGet();
+
+        if ($response['token']) {
+
+            $artq = mysqli_query($link, "SELECT da_id FROM arts_pub");
+            while ($row = mysqli_fetch_array($artq, MYSQLI_ASSOC)) {
+                $response['arts_id'][] = $row['da_id'];
+            }
         }
+
+        print(json_encode($response));
 
         break;
+
     case 1:
 
-        $states = array(0, 0, 0, 0, 0, 0);
+        $response = array();
+        $response['states'] = array('title' => 0, 'file' => 0, 'thumb' => 0, 'page' => 0, 'author' => 0, 'delete' => 0);
+        $response['message'] = "";
+        $response['token'] = $_GET['token'];
 
-        $artq = mysqli_query($link, "SELECT * FROM arts_pub WHERE aid=" . $_GET['check']);
-        while ($row = mysqli_fetch_array($artq, MYSQLI_ASSOC)) {
+        $db_rq = 'SELECT * FROM arts_pub WHERE da_id="' . $_GET['art'] . '"';
+        $artq = mysqli_query($link, $db_rq);
 
-            $ch = curl_init($row['file_name']);
-            curl_setopt($ch, CURLOPT_NOBODY, true);
-            curl_exec($ch);
-            $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            // $retcode >= 400 -> not found, $retcode = 200, found.            
-            if ($retcode >= 400) {
-                $updrq = 'DELETE FROM arts_pub WHERE aid=' . $_GET['check'];
-                mysqli_query($link, $updrq);
-                $states[5] = 1;
+        if ($artq) {
+
+            if (mysqli_num_rows($artq) > 0) {
+
+                while ($row = mysqli_fetch_array($artq, MYSQLI_ASSOC)) {
+                    
+                    da_import:
+
+                    $opts = [
+                        'http' => [
+                            'method' => 'GET',
+                            'header' => implode("\n", ['Accept-Encoding: gzip,deflate', 'User-Agent: ' . $_SERVER['HTTP_USER_AGENT']]),
+                        ]
+                    ];
+                    $api_rq = "https://www.deviantart.com/api/v1/oauth2/deviation/" . $_GET['art'] . "?mature_content=true&access_token=" . $response['token'];
+
+                    try {
+                        $context = stream_context_create($opts);
+                        $content = @file_get_contents($api_rq, false, $context);    // https://stackoverflow.com/questions/272361/how-can-i-handle-the-warning-of-file-get-contents-function-in-php
+                        if ($content !== false) {
+                            $json_response = json_decode($content, true);
+
+                            if (isset($json_response['error'])) {
+
+                                if (daTokenGet()['token']) {
+                                    $response['token'] = daTokenGet()['token'];
+                                } else {
+                                    return;
+                                }
+                                
+                                
+                            } else {
+                                if ($row['title'] != $json_response['title']) {
+                                    $updrq = 'UPDATE arts_pub SET title="' . $json_response['title'] . '" WHERE da_id="' . $_GET['art'] . '"';
+                                    mysqli_query($link, $updrq);
+                                    $response['states']['title'] = 1;
+                                }
+                                if ($row['file_name'] != $json_response['content']['src']) {
+                                    $updrq = 'UPDATE arts_pub SET file_name="' . $json_response['content']['src'] . '" WHERE da_id="' . $_GET['art'] . '"';
+                                    mysqli_query($link, $updrq);
+                                    $response['states']['file'] = 1;
+                                }
+                                if ($row['thumb'] != $json_response['thumbs'][1]['src']) {
+                                    $updrq = 'UPDATE arts_pub SET thumb="' . $json_response['thumbs'][1]['src'] . '" WHERE da_id="' . $_GET['art'] . '"';
+                                    mysqli_query($link, $updrq);
+                                    $response['states']['thumb'] = 1;
+                                }
+                                if ($row['da_page'] != $json_response['url']) {
+                                    $updrq = 'UPDATE arts_pub SET da_page="' . $json_response['url'] . '" WHERE da_id="' . $_GET['art'] . '"';
+                                    mysqli_query($link, $updrq);
+                                    $response['states']['page'] = 1;
+                                }
+                                if ($row['author'] != $json_response['author']['username']) {
+                                    $updrq = 'UPDATE arts_pub SET author="' . $json_response['author']['username'] . '" WHERE da_id="' . $_GET['art'] . '"';
+                                    mysqli_query($link, $updrq);
+                                    $response['states']['author'] = 1;
+                                }
+                            }
+
+                            /* DB vars to dA vars.
+                              $row['title'] == $json_response['title'];
+                              $row['file_name'] == $json_response['content']['src'];
+                              $row['thumb'] == $json_response['thumbs'][0]['src'];
+                              $row['da_page'] == $json_response['url'];
+                              $row['author'] == $json_response['author']['username']; */
+
+                            $response['message'] = "dA OK!";
+                        } else {
+
+                            //print_r(error_get_last());
+                            
+                            // 400 - Bad request
+                            // 404 - Not found
+                            // 401 - Unauthorized
+                            
+                            if (stripos(error_get_last()['message'], '400') || stripos(error_get_last()['message'], '404')) { 
+                                
+                                $response['message'] = "dA OK!";
+                                $updrq = 'DELETE FROM arts_pub WHERE da_id="' . $_GET['art'] . '"';
+                                mysqli_query($link, $updrq);
+                                $response['states']['delete'] = 1;
+                                
+                            } else if(stripos(error_get_last()['message'], '401')) {
+                                
+                                $response['message'] = "dA Refresh!";                                
+                                if (daTokenGet()['token']) {
+                                    $response['token'] = daTokenGet()['token'];                                    
+                                } else {
+                                    return;
+                                }
+                            } else {
+                                $response['message'] = "Strange dA Error: " . error_get_last()['message'];
+                            }
+                            
+                            error_clear_last();
+                        }
+                    } catch (Exception $e) {
+                        $response['message'] = "Error in sendind API request";
+                    }
+                }
             } else {
-
-                $parsed_params = ParseName($row['file_name']);
-
-                if ($row['title'] == '') {
-                    $updrq = 'UPDATE arts_pub SET title="' . $parsed_params['title'] . '" WHERE aid=' . $_GET['check'];
-                    mysqli_query($link, $updrq);
-                    $states[0] = 1;
-                }
-                if ($row['file_name'] == '') {
-                    $updrq = 'UPDATE arts_pub SET file_name="' . $row['thumb'] . '" WHERE aid=' . $_GET['check'];
-                    mysqli_query($link, $updrq);
-                    $states[1] = 1;
-                }
-                if ($row['thumb'] == '') {
-                    $updrq = 'UPDATE arts_pub SET thumb="' . $row['file_name'] . '" WHERE aid=' . $_GET['check'];
-                    mysqli_query($link, $updrq);
-                    $states[2] = 1;
-                }
-                if ($row['da_page'] == '') {
-                    $updrq = 'UPDATE arts_pub SET da_page="' . $parsed_params['da_page'] . '" WHERE aid=' . $_GET['check'];
-                    mysqli_query($link, $updrq);
-                    $states[3] = 1;
-                }
-                if ($row['author'] == '') {
-                    $updrq = 'UPDATE arts_pub SET author="' . $parsed_params['author'] . '" WHERE aid=' . $_GET['check'];
-                    mysqli_query($link, $updrq);
-                    $states[4] = 1;
-                }
+                $response['message'] = "0 rows got; RQ:" . $artq;
             }
-            curl_close($ch);
+        } else {
+            $response['message'] = mysqli_error($link);
         }
 
-        print(json_encode($states));
+        print(json_encode($response));
 
         break;
 }
+
