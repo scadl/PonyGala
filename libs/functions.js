@@ -57,6 +57,11 @@ $(function () {
         //buttonImageOnly: true,
         onSelect: function (dateText, inst) {
             window.location = 'index.php?date=' + dateText;
+        },
+        beforeShow: function() {
+            setTimeout(function(){
+                $('.ui-datepicker').css('z-index', 100);
+            }, 0);
         }
     });
 
