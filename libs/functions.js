@@ -59,11 +59,11 @@ $(function () {
             window.location = 'index.php?date=' + dateText;
         },
         beforeShow: function() {
-            setTimeout(function(){
-                $('.ui-datepicker').css('z-index', 100);
+        setTimeout(function(){
+                $('.ui-datepicker').css({'z-index': 100, 'padding-right':'10px'});
             }, 0);
         }
-    });
+    }); 
 
 
     $("#MLogin").click(function () {
