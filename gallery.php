@@ -68,7 +68,7 @@ if (isset($_SESSION['admin'])) {
 
     function SerchCategories() {
         global $link;
-        $req = mysqli_query($link, "SELECT * FROM categories");
+        $req = mysqli_query($link, "SELECT * FROM categories ORDER BY cat_name");
         if ($req == TRUE) {
             while ($row = mysqli_fetch_array($req, MYSQLI_ASSOC)) {
                 print('<option value="' . $row['cat_id'] . '"> ' . $row['cat_name'] . ' </option>');
@@ -94,6 +94,7 @@ if (isset($_SESSION['admin'])) {
         <td> <select style="width:265px;" id="cbCat" > <?php SerchCategories(); ?> </select> </td>
         <td> Дата: </td>
         <td> <input type="text" style="width:165px;" id="updtdate" value="<?php print(date("j-m-Y")); ?>">  </td>
+        <td> <input type="checkbox" id="dateUpdCk" title="обновлять дату" /> О.Д. </td>
         <td> <button type="button" id="updtBtn" style='color:blue'>Обновить</button>	 </td>
         <td> <button type="button" id="delBtn"  style='color:red'>Удалить</button>  </td>
     </tr>

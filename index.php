@@ -200,6 +200,12 @@ ini_set('display_errors', 1);
                                         <img src="img/stack_of_photos.png" width="20" border="0" style="position:relative; top:5px; left:3px;">
                                     </a>
                                 </span> 
+                                <span class="divider"> </span>
+                                <span class="tech_lab" style="padding:5px;">
+                                    <a href="mods/cat_manager.php" target="_blank" title="Category Manager">
+                                        <img src="img/category_settings.png" width="20" border="0" style="position:relative; top:3px; left:1px;">
+                                    </a>
+                                </span> 
                             </td>
                         <?php } ?>
 

@@ -4,7 +4,11 @@ require './../db_init.php';
 	
 	switch ($_GET['type']){
 		case 3: // Update art
-			mysqli_query($link, "UPDATE arts_pub SET category=".$_GET['cat'].", addate='".$_GET['date']."' WHERE aid=".$_GET['aid']);			
+                        $date_sql = "";
+                        if($_GET['dateupd']=='true'){
+                            $date_sql=", addate='".$_GET['date']."'";
+                        }
+			mysqli_query($link, "UPDATE arts_pub SET category=".$_GET['cat'].$date_sql." WHERE aid=".$_GET['aid']);			
 			print("Обновлёно ".$_GET['aid']); 
 		break;
 		case 4: // Remove art

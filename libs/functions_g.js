@@ -22,7 +22,7 @@ $(document).ready(function(){
         $('.selected').each(function(ind){           
             var aid = $(this).attr('art');
             $.ajax({
-                url: "mods/art-manip.php?type=3&aid="+aid+"&date="+$('#updtdate').val()+'&cat='+$('#cbCat').val(),
+                url: "mods/art-manip.php?type=3&aid="+aid+"&date="+$('#updtdate').val()+'&cat='+$('#cbCat').val()+"&dateupd="+$("#dateUpdCk").is(":checked"),
                 beforeSend: function( xhr ) {
                     $('#state_ind').show();
                 }
