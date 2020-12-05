@@ -188,12 +188,12 @@ ini_set('display_errors', 1);
                                         <img src="img/add_art.png" width="20" border="0" style="position:relative; top:5px; left:3px;"> 
                                     </a>
                                 </span> 
-                                <span class="divider"> </span>
+                                <!--<span class="divider"> </span>
                                 <span class="tech_lab" style="padding:5px;">
                                     <a href="mods/cache_cleaner.php" target="_blank" title="Clean and Fix GalaThumbs ">
                                         <img src="img/clean_thumb.png" width="20" border="0" style="position:relative; top:5px; left:3px;">
                                     </a>
-                                </span> 
+                                </span> -->
                                 <span class="divider"> </span>
                                 <span class="tech_lab" style="padding:5px;">
                                     <a href="mods/thum-selection.php<?php print($dtsrl); ?>" target="_blank" title="SelectionPreview">
