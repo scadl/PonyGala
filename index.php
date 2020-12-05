@@ -120,7 +120,7 @@ ini_set('display_errors', 1);
                 $sql = mysqli_query($link, "SELECT * FROM arts_pub");
                 $arts_nm = mysqli_num_rows($sql);
         
-                $sql = mysqli_query($link, "SELECT SUM(rating) as rating FROM ponygala.arts_pub");
+                $sql = mysqli_query($link, "SELECT SUM(rating) as rating FROM arts_pub");
                 if ($sql !== FALSE) {
                     while ($row = mysqli_fetch_array($sql, MYSQLI_ASSOC)) {
                         $vote_nm = $row['rating'];

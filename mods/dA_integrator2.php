@@ -43,14 +43,17 @@ ini_set('display_errors', 1);
 				]
 			];
 			$context = stream_context_create($opts);
-			$content = @file_get_contents($json_ask, false, $context);
+			$content = @file_get_contents($json_ask, false);
+                        
+                        
+                        print( "content" . json_decode($content, true) .'<br>');
 								
 			if ( $content ) {
 			
 				//$feed_json = gzinflate(substr($content,10));
 				$feed_json = $content;
 				$feed_obj = json_decode($feed_json, true);
-				$cursor = $feed_obj['offset'];
+				$cursor = $feed_obj['next_offset'];
 				
 				$more_stat = count($feed_obj['results']);
 						
@@ -97,7 +100,7 @@ ini_set('display_errors', 1);
 			} else {				
 				
 				$more_stat = -1;
-				$cursor = $_GET['offset'];
+				$cursor = $_GET['next_offset'];
 				
 				//print( json_decode( file_get_contents($json_ask) , true)['error'] );
 				//print('Error 403');
