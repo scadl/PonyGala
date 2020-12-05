@@ -128,7 +128,7 @@ require '../db_init.php';
 	response_type=code&
 	client_id=<?php print($da_client); ?>&
 	redirect_uri=<?php print($redirect_url); ?>&
-	scope=feed"
+	scope=browse"
 	title="(The Authorization Code Grant)"
 	id='dabutton'>
 	<br>

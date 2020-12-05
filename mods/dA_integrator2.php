@@ -29,7 +29,7 @@ ini_set('display_errors', 1);
 					
 			if ( $_GET['cursor'] != "" ) {
 				
-				$json_ask = "https://www.deviantart.com/api/v1/oauth2/feed/home?mature_content=true&access_token=".$_GET['token']."&cursor=".$_GET['cursor'];				
+				$json_ask = "https://www.deviantart.com/api/v1/oauth2/feed/home?mature_content=true&access_token=".$_GET['token']."&offset=".$_GET['cursor'];				
 			} else {
 				
 				$json_ask = "https://www.deviantart.com/api/v1/oauth2/feed/home?mature_content=true&access_token=".$_GET['token'];			
@@ -50,16 +50,16 @@ ini_set('display_errors', 1);
 				//$feed_json = gzinflate(substr($content,10));
 				$feed_json = $content;
 				$feed_obj = json_decode($feed_json, true);
-				$cursor = $feed_obj['cursor'];
+				$cursor = $feed_obj['offset'];
 				
-				$more_stat = count($feed_obj['items']);
+				$more_stat = count($feed_obj['results']);
 						
 				//print ("Page: ".$i."<br>"); 
 				$i++;
 			
-				foreach ($feed_obj['items'] as $items ){
-				if ( isset( $items['deviations'] ) ) {
-					foreach ( $items['deviations'] as $deviations ){
+				
+				if ( isset( $feed_obj['results'] ) ) {
+					foreach ( $feed_obj['results'] as $deviations ){
 
 							$ar++;
 							//file_put_contents('da_arts.txt', $deviations['content']['src']."|", FILE_APPEND | LOCK_EX);
@@ -92,12 +92,12 @@ ini_set('display_errors', 1);
 							</tr>";
 						}			
 					}
-				} 	
+					
 			
 			} else {				
 				
 				$more_stat = -1;
-				$cursor = $_GET['cursor'];
+				$cursor = $_GET['offset'];
 				
 				//print( json_decode( file_get_contents($json_ask) , true)['error'] );
 				//print('Error 403');
