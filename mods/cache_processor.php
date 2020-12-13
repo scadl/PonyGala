@@ -48,7 +48,7 @@ switch ($_GET['mode']) {
 
         if ($response['token']) {
 
-            $artq = mysqli_query($link, "SELECT da_id FROM arts_pub");
+            $artq = mysqli_query($link, "SELECT da_id FROM arts_pub WHERE da_id!='N/A'");
             while ($row = mysqli_fetch_array($artq, MYSQLI_ASSOC)) {
                 $response['arts_id'][] = $row['da_id'];
             }
@@ -82,7 +82,7 @@ switch ($_GET['mode']) {
                             'header' => implode("\n", ['Accept-Encoding: gzip,deflate', 'User-Agent: ' . $_SERVER['HTTP_USER_AGENT']]),
                         ]
                     ];
-                    $api_rq = "https://www.deviantart.com/api/v1/oauth2/deviation/" . $_GET['art'] . "?mature_content=true&access_token=" . $response['token'];
+                    $api_rq = "https://www.deviantart.com/api/v1/oauth2/deviation/" . $_GET['art'] . "?access_token=" . $response['token'];
 
                     try {
                         $context = stream_context_create($opts);
@@ -101,27 +101,27 @@ switch ($_GET['mode']) {
                                 
                             } else {
                                 if ($row['title'] != $json_response['title']) {
-                                    //$updrq = 'UPDATE arts_pub SET title="' . $json_response['title'] . '" WHERE da_id="' . $_GET['art'] . '"';
+                                    $updrq = 'UPDATE arts_pub SET title="' . $json_response['title'] . '" WHERE da_id="' . $_GET['art'] . '"';
                                     mysqli_query($link, $updrq);
                                     $response['states']['title'] = 1;
                                 }
                                 if ($row['file_name'] != $json_response['content']['src']) {
-                                    //$updrq = 'UPDATE arts_pub SET file_name="' . $json_response['content']['src'] . '" WHERE da_id="' . $_GET['art'] . '"';
+                                    $updrq = 'UPDATE arts_pub SET file_name="' . $json_response['content']['src'] . '" WHERE da_id="' . $_GET['art'] . '"';
                                     mysqli_query($link, $updrq);
                                     $response['states']['file'] = 1;
                                 }
                                 if ($row['thumb'] != $json_response['thumbs'][1]['src']) {
-                                    //$updrq = 'UPDATE arts_pub SET thumb="' . $json_response['thumbs'][1]['src'] . '" WHERE da_id="' . $_GET['art'] . '"';
+                                    $updrq = 'UPDATE arts_pub SET thumb="' . $json_response['thumbs'][1]['src'] . '" WHERE da_id="' . $_GET['art'] . '"';
                                     mysqli_query($link, $updrq);
                                     $response['states']['thumb'] = 1;
                                 }
                                 if ($row['da_page'] != $json_response['url']) {
-                                    //$updrq = 'UPDATE arts_pub SET da_page="' . $json_response['url'] . '" WHERE da_id="' . $_GET['art'] . '"';
+                                    $updrq = 'UPDATE arts_pub SET da_page="' . $json_response['url'] . '" WHERE da_id="' . $_GET['art'] . '"';
                                     mysqli_query($link, $updrq);
                                     $response['states']['page'] = 1;
                                 }
                                 if ($row['author'] != $json_response['author']['username']) {
-                                    //$updrq = 'UPDATE arts_pub SET author="' . $json_response['author']['username'] . '" WHERE da_id="' . $_GET['art'] . '"';
+                                    $updrq = 'UPDATE arts_pub SET author="' . $json_response['author']['username'] . '" WHERE da_id="' . $_GET['art'] . '"';
                                     mysqli_query($link, $updrq);
                                     $response['states']['author'] = 1;
                                 }
@@ -146,7 +146,7 @@ switch ($_GET['mode']) {
                             if (stripos(error_get_last()['message'], '400') || stripos(error_get_last()['message'], '404')) { 
                                 
                                 $response['message'] = "dA OK!";
-                                //$updrq = 'DELETE FROM arts_pub WHERE da_id="' . $_GET['art'] . '"';
+                                $updrq = 'DELETE FROM arts_pub WHERE da_id="' . $_GET['art'] . '"';
                                 mysqli_query($link, $updrq);
                                 $response['states']['delete'] = 1;
                                 
