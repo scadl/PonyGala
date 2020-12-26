@@ -18,6 +18,7 @@ if (isset($_GET['token'])) {
     $cursor = "";
     $dups = 0;
     $lastsel = 0;
+    $old_arts = 0;
     $output = array();
 
     $db_rq = "SELECT * FROM arts_pub WHERE addate!='" . date("j-m-Y") . "' ORDER BY aid DESC LIMIT 1";
@@ -82,7 +83,10 @@ if (isset($_GET['token'])) {
                         $stylec = 'color:blue';
                         
                     } else {
-                        $more_stat =false;
+                        $old_arts ++;
+                        if($old_arts > 5){
+                            $more_stat = false;
+                        }
                     }
                 } else {
 
@@ -101,6 +105,7 @@ if (isset($_GET['token'])) {
                         "<td><img src=" . $deviations['thumbs'][0]['src'] . " height='50'></td>" .
                         "<td>" . $deviations['title'] . "</td>" .
                         "<td>" . $deviations['author']['username'] . "</td>" .
+                        "<td>" . date("j-m-Y", $deviations['published_time']) . "</td>" .
                         "</tr>";
             }
         }

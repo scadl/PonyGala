@@ -40,8 +40,6 @@ function AJasKdA(token) {
                     if (!more) {
                         document.getElementById("daStatus").innerHTML =
                                 "<i><span style='color:grey; font-weight:bold;'>Чтение dA завершено</span></i>";
-                        document.getElementById("loadArts").style.display = "initial";
-                        document.getElementById("saveArts").style.display = "initial";
                     } else {
                         if (more == null) {
                             document.getElementById("daStatus").innerHTML =
@@ -50,26 +48,24 @@ function AJasKdA(token) {
                         } else {
                             document.getElementById("daStatus").innerHTML =
                                     "<br><i><span style='color:green'>Читаю ленту на dA</span></i>";
-                            err = 0;
-                            if (Number(da_data["arts"]) == 0) {
-                                empty_arts++;
-                            } else {
-                                empty_arts = 0;
-                            }
-
-                            document.getElementById("log").innerHTML =
-                                    document.getElementById("log").innerHTML + da_data["log"];
-
-                            document.getElementById("status").innerHTML = "<br>" +
-                                    "Получено страниц: " + pages + " <br>" +
-                                    "Получено артов: " + arts + " <br>" +
-                                    "Дубликатов: " + dups + " <br>" +
-                                    "Последняя дата: " + last_date + "<br>" +
-                                    "Есть еще арты: " + more + " <br>" +                                    
-                                    "<br>";
-                        }
+                            err = 0;                            
+                        }                        
                         IniTdAFeed(token);
                     }
+                    if (Number(da_data["arts"]) == 0) {
+                        empty_arts++;
+                    } else {
+                        empty_arts = 0;
+                    }
+
+                    document.getElementById("log").innerHTML =
+                            document.getElementById("log").innerHTML + da_data["log"];
+
+                    document.getElementById("status").innerHTML = "<br>" +
+                            "Получено страниц: " + pages + " <br>" +
+                            "Получено артов: " + arts + " <br>" +
+                            "Дубликатов: " + dups + " <br>" +                               
+                            "<br>";
                     
                    //document.getElementById("status").innerHTML += da_data["last_date"]
 
