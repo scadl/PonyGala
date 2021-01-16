@@ -223,8 +223,8 @@ ini_set('display_errors', 1);
                             </span>                         
                                                        
                             <span class="tech_lab btn_right" title="Подпишись на обновления - не пропускай подборки!" style="cursor:pointer;">
-                                <a href='https://twitter.com/Bronies4PDA' target="_blank">
-                                    <img src="img/twitter.png" width="20" border="0" >
+                                <a href='https://www.facebook.com/groups/655548101805005/' target="_blank">
+                                    <img src="img/like.png" width="20" border="0" >
                                 </a>
                             </span>	      
 
