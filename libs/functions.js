@@ -99,5 +99,15 @@ $(function () {
             width: "auto"
         });
     });
+	
+	$('#DisqusFrame').click(function () {
+        $("#disqus_thread").dialog({
+            title: 'Поиск в галерее',
+            resizable: false,
+            modal: true,
+            height: "auto",
+            width: "auto"
+        });
+    });
 
 });

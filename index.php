@@ -73,16 +73,18 @@ ini_set('display_errors', 1);
             <span id='head_link' style='font-family:CelestiaRedux;'>
                 <span style='font-size:45pt;'>
                     <?php if (isset($_GET['date'])) { ?>	
-                        <a href="index.php" target="_self" title="Смотреть всю коллекцию">Big DigitalArt Gallery</a><span style='font-size:8pt;'>v3</span>
+                        <a href="/" target="_self" title="Смотреть всю коллекцию">Big DigitalArt Gallery</a><span style='font-size:8pt;'>v3</span>
                     <?php } else { ?>
                         <a href="index.php?date=<?PHP print(date("j-m-Y")); ?>" target="_self" title="Смотреть сегодняшнюю подборку">Big DigitalArt Gallery</a><span style='font-size:8pt;'>v2</span>
                     <?php } ?>
                 </span>
                 <br>
                 <span style='font-size:17pt;'> Для всех, кто любит качественные рисунки фэндомов<br>                
-                    <span style="font-size:13px">(Создано <a href="http://facebook.com/scadl" target="_blank" title="Моя страничка в FB">scadl</a> 
+                    <!--
+					<span style="font-size:13px">(Создано <a href="http://facebook.com/scadl" target="_blank" title="Моя страничка в FB">scadl</a> 
                         для <a href="http://4pda.ru/forum/index.php?showtopic=403239" target="_blank" title="Добро пожаловать в клуб!">Bronies4PDA</a>) 
-                    </span> 
+                    </span>
+					-->
                 <br>
                 </span>
             </span>
@@ -217,6 +219,12 @@ ini_set('display_errors', 1);
 
                         <!-- Правая часть тулбара -->
                         <td align="right" valign="middle">	
+						
+						    <span class="tech_lab btn_right" id="" title="Оставь свой коментарий (анонимно)"  style="cursor:pointer;">
+								<a href="#disqus_thread" target="_self">
+									<img src="img/animat-pencil.gif" width="20" border="0">
+								</a>
+                            </span>    
                            
                             <span class="tech_lab btn_right" id="ArchiveFrame" title="Поиск артов (по всей коллекции)"  style="cursor:pointer;">
                                 <img src="img/67.png" width="20" border="0">
@@ -245,7 +253,7 @@ ini_set('display_errors', 1);
                                 ?>	
                                 <span class="tech_lab btn_right" 
                                       style="position: relative; top: 2px;">
-                                    <a href="index.php" target="_self" title="Смотреть всю коллекцию">
+                                    <a href="/" target="_self" title="Смотреть всю коллекцию">
                                         <img src="img/gallery.png" width="20" border="0">
                                     </a>
                                 </span>         
@@ -341,7 +349,7 @@ ini_set('display_errors', 1);
                     $filter = "";
                 }
                                
-                $sql = mysqli_query($link, "SELECT * FROM categories".$filter);
+                $sql = mysqli_query($link, "SELECT * FROM categories".$filter." ORDER BY cat_name");
                 while ($row = mysqli_fetch_array($sql, MYSQLI_BOTH)) {
 
                     $thumbs++;
@@ -366,6 +374,7 @@ ini_set('display_errors', 1);
                     $artstot = $artstot + $artscat;
                     
                     ?>
+													
                     <div class="cellstyle" >
                         <a href="gallery.php?catn=<?php print($row[0].$date_url); ?>" target="_self">
                             <div class="block_tmb" >
@@ -388,9 +397,45 @@ ini_set('display_errors', 1);
                 mysqli_close($link);
                 ?>
                 </div>
-                
+				                
                 <!-- Подвал -->
-                <br>    
+				<br> 
+				
+					<!-- Контейнер disqus-диалога -->              
+					<style  type="text/css">
+					#disqus_thread {
+						width:600px; 
+						height:inherit; 
+						text-align: center; 
+						vertical-align: top;
+						border-radius: 5px; 
+						/*background: #ccc;*/
+						
+					}
+					</style>			
+					<div id="disqus_thread" ></div>
+					
+					<script>
+						/**
+						*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+						*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+						
+						var disqus_config = function () {
+						//this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+						this.page.identifier = '/ponygala-disqus/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+						};
+						
+						
+						(function() { // DON'T EDIT BELOW THIS LINE
+						var d = document, s = d.createElement('script');
+						s.src = 'https://ponyartgalleryachive.disqus.com/embed.js';
+						s.setAttribute('data-timestamp', +new Date());
+						(d.head || d.body).appendChild(s);
+						})();
+					</script>
+					<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+				
+                   
                 <div style='color:#ccc; font-size:10pt;' class='footer_txt'>
                     Артов в подборке: <strong><?php echo $artstot ?></strong>
                 </div>                
@@ -404,6 +449,22 @@ ini_set('display_errors', 1);
                 </div>
                 
         </div>
+		
+		<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(71443834, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/71443834" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 
     </body>
 </html>
