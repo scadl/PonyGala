@@ -9,11 +9,18 @@ ini_set('display_errors', 1);
     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
+
+    <meta charset="UTF-8">
+    <meta name="description" content="Big DigitalArt Gallery v3 (by scadl)">
+  <meta name="keywords" content="brony, art, fanart, ponyart, pony, landscape, portrait, подборка, пони, арт, пейзаж, портрет, фанарт">
+  <meta name="author" content="SCADL and Moora">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <?php if (isset($_GET['date'])) { ?>	
-            <title> DigitalArt Gallery v3 (by scadl) [<?PHP print($_GET['date']); ?>] </title>			
+            <title> Big DigitalArt Gallery v3 (by scadl) [<?PHP print($_GET['date']); ?>] </title>			
         <?php } else { ?>
-            <title> DigitalArt Gallery v3 (by scadl) [Full Archive]</title>			
+            <title> Big DigitalArt Gallery v3 (by scadl) [Full Archive]</title>			
         <?php } ?>	
         <link rel="stylesheet" href="libs/main.css">
         <link rel="stylesheet" href="libs/jquery-ui/css/custom-theme/jquery-ui-1.10.4.custom.css">
@@ -52,6 +59,8 @@ ini_set('display_errors', 1);
                 }
             }
         </script>
+
+    <script data-ad-client="ca-pub-1505117965346309" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     </head>
     
     <body>

@@ -84,7 +84,9 @@
                                             daToken = resps['token'];
                                             CacheCheck(arts_arr, caIntInd);
                                         } else {
-                                            alert(resps['message']);
+                                            console.error(resps['message']);
+                                            CacheCheck(arts_arr, caIntInd+1);
+                                            document.getElementById("status").innerHTML = "<span style='color:red'>Ошибка: " + resps['message'] + " </span>";
                                         }
 
                                         break;

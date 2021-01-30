@@ -9,8 +9,15 @@ ini_set('display_errors', 0);
     "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
     <head>
+
+    <meta charset="UTF-8">
+  <meta name="description" content="Big DigitalArt Gallery v.3 - Category View (by scadl)">
+  <meta name="keywords" content="brony, art, fanart, ponyart, pony, landscape, portrait, подборка, пони, арт, пейзаж, портрет, фанарт">
+  <meta name="author" content="SCADL and Moora">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>DigitalArt Gallery v.2 - Category View (by scadl)</title>
+        <title>Big DigitalArt Gallery v.3 - Category View (by scadl)</title>
 
         <script type="text/javascript" src="libs/highslide/highslide-with-gallery.js"></script>
         <script type="text/javascript" src="libs/highslide/highslide.config.js" charset="utf-8"></script>
@@ -25,6 +32,8 @@ ini_set('display_errors', 0);
         <script type="text/javascript" src="libs/jq/jquery-ui-1_10_4.js"></script>
         <script type="text/javascript" src="libs/functions_g.js" charset="utf-8"></script>
         <?php } ?>
+
+        <script data-ad-client="ca-pub-1505117965346309" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     </head>
     <body style="font-family: CelestiaRedux, sans-serif;">
 
@@ -165,11 +174,12 @@ if (isset($_SESSION['admin'])) {
     $reqArs = mysqli_query($link, $artSQL);
     while ($row = mysqli_fetch_array($reqArs, MYSQLI_ASSOC)) {   
 
+        // Clear out art title
+        $nanmst = htmlspecialchars(ucwords($row['title']), ENT_QUOTES);
+
         if (stripos($row['file_name'], '.gif') != false) {
-            $nanmst = "&#9658; " . ucwords($row['title']);
-        } else {
-            $nanmst = ucwords($row['title']);
-        }
+            $nanmst = "&#9658; " . $nanmst;
+        } 
                     
         $atl = "<b>" . $nanmst . "</b><br><i>" . $row['author'] . "</i>";                              
         print(
