@@ -60,7 +60,9 @@ ini_set('display_errors', 1);
             }
         </script>
 
-    <script data-ad-client="ca-pub-1505117965346309" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <?php include "mods/ads_header.php" ?>
+
+
     </head>
     
     <body>
@@ -449,6 +451,8 @@ ini_set('display_errors', 1);
                     Артов в подборке: <strong><?php echo $artstot ?></strong>
                 </div>                
                 <br>
+
+               <?php include 'mods/ads_footer.php' ?>
 
                 <?php fool: ?>
 

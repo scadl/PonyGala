@@ -34,7 +34,8 @@ if(!$link){
   `category` int(11) NOT NULL DEFAULT '1',
   `rating` int(11) NOT NULL DEFAULT '0',
   `addate` text NOT NULL,
-  `da_id` text
+  `da_id` text,
+  `da_tags` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
 	// Virtual categories table

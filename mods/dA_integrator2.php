@@ -65,8 +65,7 @@ if (isset($_GET['token'])) {
 
         if (isset($feed_obj['results'])) {
             foreach ($feed_obj['results'] as $deviations) {
-
-                $ar++;
+                
                 //file_put_contents('da_arts.txt', $deviations['content']['src']."|", FILE_APPEND | LOCK_EX);
 
                 $rqchk = "SELECT * FROM arts_pub WHERE file_name='" . $deviations['content']['src'] . "'";
@@ -74,10 +73,14 @@ if (isset($_GET['token'])) {
                 if (mysqli_num_rows($sqlchk) == 0) {
 
                     if (strtotime($lastsel) < $deviations['published_time']) { 
+
+                        $ar++; // add art to a counter
+
+
                         
-                        $recrq = "INSERT INTO arts_pub (title, file_name, thumb, da_page, author, addate, da_id) VALUES " .
+                        $recrq = "INSERT INTO arts_pub (title, file_name, thumb, da_page, author, addate, da_id, da_tags) VALUES " .
                                 "('" . $deviations['title'] . "', '" . $deviations['content']['src'] . "', '" . $deviations['thumbs'][1]['src'] . "', '" . $deviations['url'] . "', " .
-                                "'" . $deviations['author']['username'] . "', '" . date("j-m-Y") . "', '" . $deviations['deviationid'] . "')";
+                                "'" . $deviations['author']['username'] . "', '" . date("j-m-Y") . "', '" . $deviations['deviationid'] . "', '')";
                         $sqlreq = mysqli_query($link, $recrq);
 
                         $stylec = 'color:blue';

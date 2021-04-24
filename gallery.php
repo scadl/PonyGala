@@ -33,7 +33,9 @@ ini_set('display_errors', 0);
         <script type="text/javascript" src="libs/functions_g.js" charset="utf-8"></script>
         <?php } ?>
 
-        <script data-ad-client="ca-pub-1505117965346309" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <?php include "mods/ads_header.php" ?>
+
+
     </head>
     <body style="font-family: CelestiaRedux, sans-serif;">
 
@@ -183,7 +185,7 @@ if (isset($_SESSION['admin'])) {
                     
         $atl = "<b>" . $nanmst . "</b><br><i>" . $row['author'] . "</i>";                              
         print(
-        "<div style='display: inline-block; margin:5px' id='art_" . $row['aid'] . "'>".
+        "<div style='display: inline-block; margin:5px' id='art_" . $row['aid'] . "' title='".$row['da_tags']."'>".
             "<div align='center' class='thumb-frame' art='" . $row['aid'] . "'>".                                    
                 "<a href='".$row['file_name']."' class='highslide' style='vertical-align:middle;' 
                     title='".$atl."' id='art_" . $row['aid'] . "' onclick='return hs.expand(this, config1)'>".
@@ -222,6 +224,8 @@ if (mysqli_num_rows($reqArs)==90) {
 mysqli_close($link);
 ?>
 </div>
+
+<?php include 'mods/ads_footer.php' ?>
 
 <?php fool: ?>
 <div align="center" style="font-family: sans-serif;">

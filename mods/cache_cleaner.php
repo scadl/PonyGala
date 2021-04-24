@@ -61,6 +61,7 @@
                                 switch (ajcheck.status) {
                                     case 200:
 
+                                        try {
                                         var resps = JSON.parse(ajcheck.responseText);
                                         for (var key in resps['states']) {
                                             stats[key] += Number(resps['states'][key]);
@@ -83,11 +84,15 @@
                                         } else if (resps['message']=='dA Refresh!') {
                                             daToken = resps['token'];
                                             CacheCheck(arts_arr, caIntInd);
-                                        } else {
+                                        } else {                                            
                                             console.error(resps['message']);
-                                            CacheCheck(arts_arr, caIntInd+1);
-                                            document.getElementById("status").innerHTML = "<span style='color:red'>Ошибка: " + resps['message'] + " </span>";
+                                            CacheCheck(arts_arr, caIntInd+1);                                           
                                         }
+                                    }catch(e){
+                                        // Parse Eror
+                                        console.error(e)
+                                        CacheCheck(arts_arr, caIntInd+1);   
+                                    }
 
                                         break;
                                     default:

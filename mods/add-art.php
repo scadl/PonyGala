@@ -154,6 +154,12 @@ require '../db_init.php';
                                 <?php SerchCategories(); ?> 
                             </select>
                         </td>
+                    </tr>
+                    <tr> 
+                        <td class='cellTBstyle' colspan="2">
+                            Тэги, через запятую<br>
+                            <textarea type="text" name="tags" class="bigInput"></textarea>
+                        </td>
                     </tr> 
                     <tr> 
 
@@ -185,11 +191,11 @@ require '../db_init.php';
                         $sqlchk = mysqli_query($link, $rqchk);
                         if (mysqli_num_rows($sqlchk) == 0) {
 
-                            $recrq = "INSERT INTO arts_pub (title, file_name, thumb, da_page, author, addate, category, da_id) VALUES ("
+                            $recrq = "INSERT INTO arts_pub (title, file_name, thumb, da_page, author, addate, category, da_id, da_tags) VALUES ("
                                     . "'" . $_POST['title'] . "', '" . $_POST['file_name'] . "', "
                                     . "'" . $_POST['thumb'] . "', '" . $_POST['da_page'] . "', "
                                     . "'" . $_POST['author'] . "', '" . $_POST['addate'] . "', "
-                                          . $_POST['category'] . ", 'N/A')";
+                                          . $_POST['category'] . ", 'N/A', '" . $_POST['tags'] . "')";
                             $sqlreq = mysqli_query($link, $recrq);
 
                             print("<div class='okBtn'>Арт успешно добавлен</div>");
