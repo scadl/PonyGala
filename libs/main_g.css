@@ -65,6 +65,12 @@
     font-style: italic;
     font-family: sans-serif;
 }
+.thum-tags{
+    margin-top: 7px;
+    font-size: 10pt;
+    font-style: normal;
+    font-family: sans-serif;
+}
 
 .vote_panel_light{
     background:#bbb;

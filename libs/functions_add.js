@@ -31,7 +31,7 @@ function AJasKdA(token) {
                     var da_data = JSON.parse(ajda.responseText);
                     //var old_cursor = new_cursor;
                     pages = Number(da_data["pages"]) + pages;
-                    arts = (Number(da_data["arts"]) - Number(da_data["dups"])) + arts;
+                    arts = Number(da_data["arts"]) + arts;
                     new_cursor = da_data["cursor"];
                     more = da_data["more"];
                     dups = Number(da_data["dups"]) + dups;
@@ -63,7 +63,7 @@ function AJasKdA(token) {
 
                     document.getElementById("status").innerHTML = "<br>" +
                             "Получено страниц: " + pages + " <br>" +
-                            "Получено артов: " + arts + " <br>" +
+                            "Новых артов: " + arts + " <br>" +
                             "Дубликатов: " + dups + " <br>" +                               
                             "<br>";
                     
