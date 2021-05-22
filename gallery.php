@@ -16,6 +16,25 @@ ini_set('display_errors', 0);
   <meta name="author" content="SCADL and Moora">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- The Open Graph protocol parameters (facebook, vk, etc link params)-->
+    <?php if (isset($_GET['date'])) { ?>	
+    <!-- <meta property="og:url"                content="https://artgala.scadsdnd.net/gallery.php?catn=<?PHP print($_GET['catn']); ?>&date=<?PHP print(date("j-m-Y")); ?>" /> -->                       
+    <meta property="og:title"              content="Big DA Gallery [<?PHP print($_GET['date']); ?>]" />
+    <meta property="og:description"        content="Подборка за <?PHP print(date("j-m-Y")); ?>, просмотр категории" />
+    <?php } else { ?>
+    <!-- <meta property="og:url"                content="https://artgala.scadsdnd.net/gallery.php?catn=<?PHP print($_GET['catn']); ?>" /> -->
+    <meta property="og:title"              content="Big DA Gallery [Весь архив]" />
+    <meta property="og:description"        content="Просмотр категории без даты" />
+    <?php } ?>                    
+    <meta property="og:image"               content="img/GalleryLogoQB.png" />        
+    <meta property="og:image:width"         content="512" />        
+    <meta property="og:image:height "       content="512" />        
+    <meta property="og:type"               content="website" />        
+
+<!-- Chrome WebApp Params -->
+    <link rel="icon" href="/libs/favicon.ico">
+    <link rel="manifest" href="/libs/manifest.json">
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Big DigitalArt Gallery v.3 - Category View (by scadl)</title>
 
@@ -100,12 +119,15 @@ if (isset($_SESSION['admin'])) {
 
     <table align="center" cellpadding="5" cellspacing="0" border="0" style="border-radius:5px; background: #eee; font-family: sans-serif; position:fixed; top: 0px; left:130px; z-index:90; border: solid 3px grey"> 
     <tr>
-        <td id="cAction" align="center" style="width: 20px; font-weight:bold; background:grey; color:white; border-radius:0px 5px 5px 0px;"> 0 </td>
+        <td > Выбрано: </td>
+        <td id="nSelected" align="center" style="width: 20px; font-weight:bold; color:DarkBlue; border-right: solid 3px grey"> 0 </td>
+        <td > Обрабатано: </td>
+        <td id="cAction" align="center" style="width: 20px; font-weight:bold; color:maroon; border-right: solid 3px grey"> 0 </td>
         <td> Категория: </td>
         <td> <select style="width:265px;" id="cbCat" > <?php SerchCategories(); ?> </select> </td>
         <td> Дата: </td>
         <td> <input type="text" style="width:165px;" id="updtdate" value="<?php print(date("j-m-Y")); ?>">  </td>
-        <td> <input type="checkbox" id="dateUpdCk" title="обновлять дату" /> О.Д. </td>
+        <td> <input type="checkbox" id="dateUpdCk" title="обновлять дату для выбранных артов" /> Обновить дату </td>
         <td> <button type="button" id="updtBtn" style='color:blue'>Обновить</button>	 </td>
         <td> <button type="button" id="delBtn"  style='color:red'>Удалить</button>  </td>
     </tr>

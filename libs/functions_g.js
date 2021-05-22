@@ -16,6 +16,11 @@ $(document).ready(function(){
 
     $('.thumb-frame').click(function(){
         $(this).toggleClass('selected');
+        if($(this).hasClass('selected')){
+            $("#nSelected").text( Number($("#nSelected").text())+1 );
+        } else {
+            $("#nSelected").text( Number($("#nSelected").text())-1 );
+        }
     });
 
     function UpdtData() {
@@ -30,6 +35,7 @@ $(document).ready(function(){
                 acts--;
                 $('#cAction').text(acts);
                 $("#art_"+aid).remove();
+                $("#nSelected").text( Number($("#nSelected").text())-1 );
             });
             acts++;
         });
