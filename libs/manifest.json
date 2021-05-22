@@ -1,0 +1,29 @@
+{
+  "name": "Big DigitalArt Gallery",
+  "short_name": "Big dA Gallery",
+  "start_url": "/",
+  "description": "Big DigitalArt Gallery Full Archive",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/img/GalleryLogoQB.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+	{
+      "src": "/img/GalleryLogoQB.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+	{
+      "src": "/img/GalleryLogoQB.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "related_applications": [{
+    "platform": "web"
+  }]
+}

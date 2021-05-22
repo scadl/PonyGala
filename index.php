@@ -11,15 +11,17 @@ ini_set('display_errors', 1);
     <head>
 
     <meta charset="UTF-8">
+
+    <!-- SEO minaml params-->
     <meta name="description" content="Big DigitalArt Gallery v3 (by scadl)">
   <meta name="keywords" content="brony, art, fanart, ponyart, pony, landscape, portrait, подборка, пони, арт, пейзаж, портрет, фанарт">
   <meta name="author" content="SCADL and Moora">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Facebook Crawler parameters -->
+  <!-- The Open Graph protocol parameters (facebook, vk, etc link params)-->
     <?php if (isset($_GET['date'])) { ?>	
     <meta property="og:url"                content="https://artgala.scadsdnd.net/index.php?date=<?PHP print(date("j-m-Y")); ?>" />                        
-    <meta property="og:title"              content="Big DA Gallery [Подборка от <?PHP print($_GET['date']); ?>]" />
+    <meta property="og:title"              content="Big DA Gallery [<?PHP print($_GET['date']); ?>]" />
     <meta property="og:description"        content="Подборка фанарта за <?PHP print(date("j-m-Y")); ?>" />
     <?php } else { ?>
     <meta property="og:url"                content="https://artgala.scadsdnd.net/" />
@@ -27,7 +29,13 @@ ini_set('display_errors', 1);
     <meta property="og:description"        content="Крупнейшая галерея фанарта с 2013г" />
     <?php } ?>                    
     <meta property="og:image"               content="img/GalleryLogoQB.png" />        
+    <meta property="og:image:width"         content="512" />        
+    <meta property="og:image:height "       content="512" />        
     <meta property="og:type"               content="website" />        
+
+<!-- Chrome WebApp Params -->
+    <link rel="icon" href="/libs/favicon.ico">
+    <link rel="manifest" href="/libs/manifest.json">
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <?php if (isset($_GET['date'])) { ?>	
