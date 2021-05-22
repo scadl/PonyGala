@@ -19,11 +19,11 @@ ini_set('display_errors', 1);
   <!-- Facebook Crawler parameters -->
     <?php if (isset($_GET['date'])) { ?>	
     <meta property="og:url"                content="https://artgala.scadsdnd.net/index.php?date=<?PHP print(date("j-m-Y")); ?>" />                        
-    <meta property="og:title"              content="Big DigitalArt Gallery v3 (by scadl) [<?PHP print($_GET['date']); ?>]" />
+    <meta property="og:title"              content="Big DA Gallery [Подборка от <?PHP print($_GET['date']); ?>]" />
     <meta property="og:description"        content="Подборка фанарта за <?PHP print(date("j-m-Y")); ?>" />
     <?php } else { ?>
     <meta property="og:url"                content="https://artgala.scadsdnd.net/" />
-    <meta property="og:title"              content="Big DigitalArt Gallery v3 (by scadl) [Full Archive]" />
+    <meta property="og:title"              content="Big DA Gallery [Весь архив]" />
     <meta property="og:description"        content="Крупнейшая галерея фанарта с 2013г" />
     <?php } ?>                    
     <meta property="og:image"               content="img/GalleryLogo.png" />        
