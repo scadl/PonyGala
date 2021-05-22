@@ -26,7 +26,7 @@ ini_set('display_errors', 1);
     <meta property="og:title"              content="Big DA Gallery [Весь архив]" />
     <meta property="og:description"        content="Крупнейшая галерея фанарта с 2013г" />
     <?php } ?>                    
-    <meta property="og:image"               content="img/GalleryLogo.png" />        
+    <meta property="og:image"               content="img/GalleryLogoQB.png" />        
     <meta property="og:type"               content="website" />        
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
