@@ -16,17 +16,33 @@ ini_set('display_errors', 1);
   <meta name="author" content="SCADL and Moora">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Facebook Crawler parameters -->
+    <?php if (isset($_GET['date'])) { ?>	
+    <meta property="og:url"                content="https://artgala.scadsdnd.net/index.php?date=<?PHP print(date("j-m-Y")); ?>" />                        
+    <meta property="og:title"              content="Big DigitalArt Gallery v3 (by scadl) [<?PHP print($_GET['date']); ?>]" />
+    <meta property="og:description"        content="Подборка фанарта за <?PHP print(date("j-m-Y")); ?>" />
+    <?php } else { ?>
+    <meta property="og:url"                content="https://artgala.scadsdnd.net/" />
+    <meta property="og:title"              content="Big DigitalArt Gallery v3 (by scadl) [Full Archive]" />
+    <meta property="og:description"        content="Крупнейшая галерея фанарта с 2013г" />
+    <?php } ?>                    
+    <meta property="og:image"               content="img/GalleryLogo.png" />        
+    <meta property="og:type"               content="website" />        
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <?php if (isset($_GET['date'])) { ?>	
             <title> Big DigitalArt Gallery v3 (by scadl) [<?PHP print($_GET['date']); ?>] </title>			
         <?php } else { ?>
             <title> Big DigitalArt Gallery v3 (by scadl) [Full Archive]</title>			
         <?php } ?>	
+
         <link rel="stylesheet" href="libs/main.css">
         <link rel="stylesheet" href="libs/jquery-ui/css/custom-theme/jquery-ui-1.10.4.custom.css">
+
         <script src="libs/jq/jquery-1_9_1.js"></script>
         <script src="libs/jq/jquery-ui-1_10_4.js"></script>
         <script src="libs/functions.js"></script>
+
         <?PHP
         
         $publication = "";
