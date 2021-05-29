@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
     var acts = 0;
+    var seld = 0
 
     $("#updtdate").datepicker({
         showOtherMonths: false,
@@ -17,10 +18,11 @@ $(document).ready(function(){
     $('.thumb-frame').click(function(){
         $(this).toggleClass('selected');
         if($(this).hasClass('selected')){
-            $("#nSelected").text( Number($("#nSelected").text())+1 );
+            seld++;
         } else {
-            $("#nSelected").text( Number($("#nSelected").text())-1 );
+            seld--;
         }
+        $("#nSelected").text(seld);
     });
 
     function UpdtData() {
@@ -33,13 +35,15 @@ $(document).ready(function(){
                 }
             }).done(function() {                
                 acts--;
+                seld--;
                 $('#cAction').text(acts);
                 $("#art_"+aid).remove();
-                $("#nSelected").text( Number($("#nSelected").text())-1 );
+                $("#nSelected").text(seld);                
             });
             acts++;
         });
         $('#cAction').text(acts);
+        
     }
 
     function DelData(){
@@ -52,8 +56,10 @@ $(document).ready(function(){
                 }
             }).done(function() {                
                 acts--;
+                seld--;
                 $('#cAction').text(acts);
                 $("#art_"+aid).remove();
+                $("#nSelected").text(seld);
             });
             acts++;
         });
