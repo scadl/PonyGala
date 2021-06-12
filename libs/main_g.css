@@ -114,17 +114,34 @@ a:visited{
     width: 25%
 }
 .pgsl{
-    background:#bbb; 
-    padding:5px; 
-    margin:5px; 
+    background:#ddd; 
+    padding:5px 10px; 
+    margin:0spx; 
     border-radius:5px;
     font-family: sans-serif;
     text-align:center;
-    float:left;
-    display: block;
+    display: inline-block;
+    border: solid 2px #eee;
     font-weight: bold;
-    border: solid 1px #aaa;
 }
+.pgsl_sel{
+    color:#eee;
+    background: grey;
+    padding:5px 10px; 
+    margin:0spx; 
+    border-radius:5px;
+    font-family: sans-serif;
+    text-align:center;
+    display: inline-block;
+    border: solid 2px #eee;
+    font-weight: bold;
+}
+.pgsl:hover{
+    color:#eee;
+    background: grey;
+}
+
+
 .pbSecR{
     background:#765959;
 }

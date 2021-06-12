@@ -260,14 +260,21 @@ ini_set('display_errors', 1);
 									<img src="img/animat-pencil.gif" width="20" border="0">
 								</a>
                             </span>    
+
+                            <span class="tech_lab btn_right" title="Помогите нашему проекту" style="cursor:pointer;">
+                                <a href='https://sobe.ru/na/artgala' target="_blank">
+                                    <img src="img/donation.png" width="20" border="0" >
+                                </a>
+                            </span>	      
                            
                             <span class="tech_lab btn_right" id="ArchiveFrame" title="Поиск артов (по всей коллекции)"  style="cursor:pointer;">
                                 <img src="img/67.png" width="20" border="0">
                             </span>                         
+
                                                        
                             <span class="tech_lab btn_right" title="Подпишись на обновления - не пропускай подборки!" style="cursor:pointer;">
                                 <a href='https://www.facebook.com/groups/655548101805005/' target="_blank">
-                                    <img src="img/like.png" width="20" border="0" >
+                                    <img src="img/fb_clogo.png" width="20" border="0" >
                                 </a>
                             </span>	      
 
@@ -296,7 +303,8 @@ ini_set('display_errors', 1);
                                 <span class="tech_lab btn_right" id="dtbtn" 
                                       style="position: relative; top: 2px; cursor:pointer;" title="Выбрать день публикации" >                                    
                                     <input type="hidden" id="datepicker" value="<?PHP print($_GET['date']); ?>">
-                                    <img src="img/calendar1.png" width="20" border="0"/>                                    
+                                    <img src="img/calendar1.png" width="20" border="0"/> 
+                                    <span style="position: relative; top: -4px;">Подборки</span>
                                 </span>
 
                                 <span class="tech_lab btn_right" width="100" 
@@ -310,7 +318,8 @@ ini_set('display_errors', 1);
                                 <span class="tech_lab btn_right" id="dtbtn" 
                                       style="position: relative; top: 2px; cursor:pointer;" title="Выбрать день публикации" >                                    
                                     <input type="hidden" id="datepicker" >
-                                    <img src="img/calendar1.png" width="20" border="0"/>                                    
+                                    <img src="img/calendar1.png" width="20" border="0"/>
+                                    <span style="position: relative; top: -4px;">Подборки</span>
                                 </span>
 
                                 <span class="tech_lab btn_right" width="100" 

@@ -234,13 +234,33 @@ if (isset($_SESSION['admin'])) {
 <div style="padding:15px; text-align: center;" id='pager'>
 <?php 
 if ($ofsetvar != 0){
-    print("<a target='_self' href='?".$searchvar.$catvar.$datevar."&ofset=".($ofsetvar - 90)."'> 
-        <div class='pgs'> &larr; Сюда  </div> 
+    print("<a target='_self' title=' В начало ' href='?".$searchvar.$catvar.$datevar."'> 
+        <div class='pgsl'> &laquo; </div> 
     </a>");
-}    
+    print("<a target='_self' title=' Назад ' href='?".$searchvar.$catvar.$datevar."&ofset=".($ofsetvar - 90)."'> 
+        <div class='pgsl'> &lsaquo; </div> 
+    </a>");
+}
+
+$pageSQL = "SELECT * FROM arts_pub WHERE ". $catsql. $sqname. $sqauth. $datesql;
+$reqPage = mysqli_query($link, $pageSQL);
+$pagenum = mysqli_num_rows($reqPage);
+$pagemark = 1;
+for($i = 0; $i < $pagenum; $i+=90){
+    $ofsetvar==$i ? $sel='pgsl_sel' : $sel='pgsl'; 
+    print("<a target='_self' href='?".$searchvar.$catvar.$datevar."&ofset=".$i."'>".
+        "<div class='".$sel."'> ".$pagemark." </div>".
+    "</a>");
+    $pagemark+=1;
+    $lastpage = $i;
+}
+
 if (mysqli_num_rows($reqArs)==90) { 
-    print("<a target='_self' href='?".$searchvar.$catvar.$datevar."&ofset=".($ofsetvar + 90)."'> 
-        <div class='pgs'> Туда &rarr;  </div> 
+    print("<a target='_self' title=' Вперед ' href='?".$searchvar.$catvar.$datevar."&ofset=".($ofsetvar + 90)."'> 
+        <div class='pgsl'> &rsaquo; </div> 
+    </a>");
+    print("<a target='_self' title=' В конец ' href='?".$searchvar.$catvar.$datevar."&ofset=".$lastpage."'> 
+        <div class='pgsl'> &raquo; </div> 
     </a>");
 }
 mysqli_close($link);
