@@ -48,7 +48,7 @@ switch ($_GET['mode']) {
 
         if ($response['token']) {
 
-            $artq = mysqli_query($link, "SELECT da_id FROM arts_pub WHERE da_id!='N/A'");
+            $artq = mysqli_query($link, "SELECT da_id FROM arts_pub WHERE da_id LIKE '%-%-%-%-%'");
             while ($row = mysqli_fetch_array($artq, MYSQLI_ASSOC)) {
                 $response['arts_id'][] = $row['da_id'];
             }

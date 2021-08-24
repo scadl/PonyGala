@@ -221,8 +221,14 @@ ini_set('display_errors', 1);
                         <!-- Центральная часть тулбара -->
                             <td>
                                  <span class="tech_lab" style="padding:5px;">
-                                    <a href="mods/dA_add-art.php" target="_blank" title="Add Art from dA"> 
+                                    <a href="mods/dA_add-art.php" target="_blank" title="Add Art from deviantArt"> 
                                         <img src="img/deviantart.png" width="20" border="0" style="position:relative; top:5px; left:3px;"> 
+                                    </a>
+                                </span> 
+                                <span class="divider"> </span>
+                                <span class="tech_lab" style="padding:5px;">
+                                    <a href="mods/tW_add-art.php" target="_blank" title="Add Art from tWitter"> 
+                                        <img src="img/news_tweet.png" width="20" border="0" style="position:relative; top:5px; left:3px;"> 
                                     </a>
                                 </span> 
                                 <span class="divider"> </span>
