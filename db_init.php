@@ -18,7 +18,7 @@ if(!$link){
 	
 	// Setting read mode to unicode
     mysqli_query($link, "SET sql_mode = ''");
-    mysqli_query($link, 'SET NAMES utf8');
+    mysqli_query($link, 'SET NAMES utf8mb4');
 	
 	// -----------------------------------------
 	// Building empty tables, if not exist in db
@@ -36,26 +36,26 @@ if(!$link){
   `addate` text NOT NULL,
   `da_id` text,
   `da_tags` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;");
 
 	// Virtual categories table
 	mysqli_query($link, 'CREATE TABLE IF NOT EXISTS `categories` (
   `cat_id` int(11) NOT NULL,
   `cat_name` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
 
 	// Subscribers table (urrently not used in code)
 	mysqli_query($link, 'CREATE TABLE IF NOT EXISTS `subscribers` (
   `uid` int(11) NOT NULL,
   `email` text,
   `subscribed` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
 
 	// Vistors tracking table (used to store statistic only)
 	mysqli_query($link, 'CREATE TABLE IF NOT EXISTS `visitors` (
   `ip` text,
   `visits` int(11) DEFAULT NULL,
   `date` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
 }
 
