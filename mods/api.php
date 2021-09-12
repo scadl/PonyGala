@@ -12,6 +12,22 @@ if(isset($_GET['act'])){
     case 1:
         $sql = mysqli_query($link, "SELECT * FROM categories ORDER BY cat_name");
         while ($row = mysqli_fetch_array($sql, MYSQLI_ASSOC)){
+            if (isset($_GET['date'])) {
+                $reqi = mysqli_query($link, "SELECT aid FROM arts_pub WHERE category=" . $row['cat_id'] . " AND addate='" . $_GET['date'] . "'");
+                $reqt = mysqli_query($link, "SELECT thumb FROM arts_pub WHERE category=" . $row['cat_id'] . " AND addate='" . $_GET['date'] . "' ORDER BY rand() LIMIT 5");
+            } else {
+                $reqi = mysqli_query($link, "SELECT aid FROM arts_pub WHERE category=" . $row['cat_id']);
+                $reqt = mysqli_query($link, "SELECT thumb FROM arts_pub WHERE category=" . $row['cat_id'] . " ORDER BY rand() LIMIT 5");
+            }
+
+            $index = 1;
+            while ($row_tb = mysqli_fetch_array($reqt, MYSQLI_ASSOC)){
+                $row['thumb_'.$index] = $row_tb['thumb'];
+                $index++;
+            }
+
+            $row['count'] = mysqli_num_rows($reqi);
+
             $out[] = $row;
         }
         break;
