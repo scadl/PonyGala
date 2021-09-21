@@ -42,6 +42,36 @@ if(isset($_GET['act'])){
             $out[] = $row;
         }
         break;
+    
+        case 3:
+            $row = array();
+
+            if (isset($_GET['date'])) {
+                $reqt = mysqli_query($link, "SELECT thumb FROM arts_pub WHERE category=" . $row['cat_id'] . " AND addate='" . $_GET['date'] . "' ORDER BY rand() LIMIT 5");
+            } else {
+                $reqt = mysqli_query($link, "SELECT thumb FROM arts_pub WHERE category=" . $row['cat_id'] . " ORDER BY rand() LIMIT 5");
+            }
+
+            $index = 1;
+            while ($row_tb = mysqli_fetch_array($reqt, MYSQLI_ASSOC)){
+                $row['thumb_'.$index] = $row_tb['thumb'];
+                $index++;
+            }
+
+            $out[] = $row;
+            break;
+
+        case 4:
+            
+            $publication = array();
+            $sql = mysqli_query($link, "SELECT file_name, addate FROM arts_pub GROUP BY addate");
+                        
+            while ($row = mysqli_fetch_array($sql, MYSQLI_ASSOC)) {
+                $publication = $row['addate'];                
+            } 
+                
+            $out[] = $publication;
+            break;
 
     default:
         
