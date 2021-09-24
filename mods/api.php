@@ -26,6 +26,12 @@ if(isset($_GET['act'])){
                 $index++;
             }
 
+            
+                for($i = $index; $i <= 5; $i++ ){
+                    $row['thumb_'.$i] = "https://artgala.scadsdnd.net/img/no-arts.png";
+                }
+            
+
             $row['count'] = mysqli_num_rows($reqi);
 
             $out[] = $row;
@@ -67,7 +73,7 @@ if(isset($_GET['act'])){
             $sql = mysqli_query($link, "SELECT file_name, addate FROM arts_pub GROUP BY addate");
                         
             while ($row = mysqli_fetch_array($sql, MYSQLI_ASSOC)) {
-                $publication = $row['addate'];                
+                $publication[] = $row['addate'];                
             } 
                 
             $out[] = $publication;
