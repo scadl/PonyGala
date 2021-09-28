@@ -79,6 +79,49 @@ if(isset($_GET['act'])){
             $out[] = $publication;
             break;
 
+            case 5:
+                $rq = "INSERT INTO categories(cat_name) VALUES ('" . $_GET['newCat'] . "');";
+                $sql = mysqli_query($link, $rq);
+                $out['result'] = "Added ".$_GET['newCat'];
+            break;
+
+            case 6:
+                $rq = "UPDATE categories SET cat_name='".$_GET['newName']."' WHERE cat_id=" . $_GET['catid'] . ";";
+                $sql = mysqli_query($link, $rq);
+                $out['result'] = "Renamed ".$_GET['newName'];
+            break;
+
+            case 7:
+                $rq1 = "DELETE FROM categories WHERE cat_id=" . $_GET['catid'] . ";";
+                $sql = mysqli_query($link, $rq1);
+                $rq2 = "UPDATE arts_pub SET category=1 WHERE category=" . $_GET['catid'] . ";";
+                $sql = mysqli_query($link, $rq2);
+                $out['result'] = "Deleted ".$_GET['catid'];
+            break;
+
+            case 8:
+                $date_sql = "";
+                if($_GET['dateupd']=='true'){
+                    $date_sql=", addate='".$_GET['date']."'";
+                }
+                mysqli_query($link, "UPDATE arts_pub SET category=".$_GET['cat'].$date_sql." WHERE aid=".$_GET['aid']);			
+                $out['result'] = "Обновлёно ".$_GET['aid']; 
+                break;
+
+            case 9:
+                mysqli_query($link, "DELETE FROM arts_pub WHERE aid=".$_GET['aid']);
+                $out['result'] = "Удалён: ".$_GET['aid'];
+                break;
+
+            case 10:
+                if($_GET['pass']==$master){
+                    $out['isAdmin'] = 1
+                } else {
+                    $out['isAdmin'] = 0
+                }
+
+                break;
+
     default:
         
     break;
