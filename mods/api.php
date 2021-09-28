@@ -92,11 +92,16 @@ if(isset($_GET['act'])){
             break;
 
             case 7:
+            if($_GET['catid']!="1"){
                 $rq1 = "DELETE FROM categories WHERE cat_id=" . $_GET['catid'] . ";";
                 $sql = mysqli_query($link, $rq1);
                 $rq2 = "UPDATE arts_pub SET category=1 WHERE category=" . $_GET['catid'] . ";";
                 $sql = mysqli_query($link, $rq2);
                 $out['result'] = "Deleted ".$_GET['catid'];
+            } else {
+                $out['result'] = "This category is system!";
+            }
+                
             break;
 
             case 8:
