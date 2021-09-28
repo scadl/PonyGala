@@ -104,20 +104,20 @@ if(isset($_GET['act'])){
                 if($_GET['dateupd']=='true'){
                     $date_sql=", addate='".$_GET['date']."'";
                 }
-                mysqli_query($link, "UPDATE arts_pub SET category=".$_GET['cat'].$date_sql." WHERE aid=".$_GET['aid']);			
+                $sql = mysqli_query($link, "UPDATE arts_pub SET category=".$_GET['cat'].$date_sql." WHERE aid=".$_GET['aid']);			
                 $out['result'] = "Обновлёно ".$_GET['aid']; 
                 break;
 
             case 9:
-                mysqli_query($link, "DELETE FROM arts_pub WHERE aid=".$_GET['aid']);
+                $sql = mysqli_query($link, "DELETE FROM arts_pub WHERE aid=".$_GET['aid']);
                 $out['result'] = "Удалён: ".$_GET['aid'];
                 break;
 
             case 10:
                 if($_GET['pass']==$master){
-                    $out['isAdmin'] = 1
+                    $out['isAdmin'] = 1;
                 } else {
-                    $out['isAdmin'] = 0
+                    $out['isAdmin'] = 0;
                 }
 
                 break;
