@@ -77,21 +77,21 @@ if(isset($_GET['act'])){
             } 
                 
             $out[] = $publication;
-            break;
+        break;
 
-            case 5:
+        case 5:
                 $rq = "INSERT INTO categories(cat_name) VALUES ('" . $_GET['newCat'] . "');";
                 $sql = mysqli_query($link, $rq);
                 $out[] = array("result" => "Added ".$_GET['newCat']);
-            break;
+        break;
 
-            case 6:
+        case 6:
                 $rq = "UPDATE categories SET cat_name='".$_GET['newName']."' WHERE cat_id=" . $_GET['catid'] . ";";
                 $sql = mysqli_query($link, $rq);
                 $out[] = array("result" => "Renamed ".$_GET['newName']);
-            break;
+        break;
 
-            case 7:
+        case 7:
             if($_GET['catid']!="1"){
                 $rq1 = "DELETE FROM categories WHERE cat_id=" . $_GET['catid'] . ";";
                 $sql = mysqli_query($link, $rq1);
@@ -100,33 +100,38 @@ if(isset($_GET['act'])){
                 $out[] = array("result" => "Deleted ".$_GET['catid']);
             } else {
                 $out[] = array("result" => "This category is system!");
-            }
-                
-            break;
+            }                
+        break;
 
-            case 8:
+        case 8:
                 $date_sql = "";
                 if($_GET['dateupd']=='true'){
                     $date_sql=", addate='".$_GET['date']."'";
                 }
                 $sql = mysqli_query($link, "UPDATE arts_pub SET category=".$_GET['cat'].$date_sql." WHERE aid=".$_GET['aid']);			
                 $out[] = array("result" => "Обновлёно ".$_GET['aid']); 
-                break;
+        break;
 
-            case 9:
+        case 9:
                 $sql = mysqli_query($link, "DELETE FROM arts_pub WHERE aid=".$_GET['aid']);
                 $out[] = array("result" => "Удалён: ".$_GET['aid']);
-                break;
+        break;
 
-            case 10:
+        case 10:
                 if($_GET['pass']==$master){
                     $out[] = array("isAdmin" => 1);
                 } else {
                     $out[] = array("isAdmin" => 0);
                }
-               
+        break;
 
-                break;
+        case 11:
+                $rq = "SELECT * FROM categories ORDER BY cat_name";
+                $sql = mysqli_query($link, $rq);
+                while ($row = mysqli_fetch_array($sql, MYSQLI_ASSOC)) {
+                    $out[] = $row;
+                }
+        break;
 
     default:
         
