@@ -119,9 +119,9 @@ if(isset($_GET['act'])){
 
         case 10:
                 if($_GET['pass']==$master){
-                    $out[] = array("isAdmin" => 1);
+                    $out[] = array("isAdmin" => "true");
                 } else {
-                    $out[] = array("isAdmin" => 0);
+                    $out[] = array("isAdmin" => "false");
                }
         break;
 
