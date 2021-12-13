@@ -70,7 +70,7 @@ if(isset($_GET['act'])){
         case 4:
             
             $publication = array();
-            $sql = mysqli_query($link, "SELECT file_name, addate FROM arts_pub GROUP BY addate ORDER BY STR_TO_DATE(addate, '%e-%m-%Y')");
+            $sql = mysqli_query($link, "SELECT file_name, addate FROM arts_pub GROUP BY addate ORDER BY STR_TO_DATE(addate, '%e-%m-%Y') DESC");
                         
             while ($row = mysqli_fetch_array($sql, MYSQLI_ASSOC)) {
                 $publication[] = $row['addate'];                
