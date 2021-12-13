@@ -72,4 +72,56 @@ $(document).ready(function(){
     $('#delBtn').click(function(){
         DelData();
     });
+
+    $('.thumb-frame').draggable({ 
+        revert: "invalid",
+        drag: function(event, ui){
+            $(ui.helper).addClass("thumb_frame_ontop");
+        }
+    });
+
+    $('.admin_cell_cat').droppable({
+        tolerance: 'pointer',
+        greedy: true,
+        drop: function( event, ui ) {
+
+            var cat_id = $( this ).attr('val');
+            var art_id = $(ui.draggable).attr('art');
+            var cat_dz = $( this )
+
+            cat_dz.addClass( "ui-state-highlight" );   
+            
+            $.ajax({
+                url: "mods/art-manip.php?type=3&aid="+art_id+"&date="+$('#updtdate').val()+'&cat='+cat_id+"&dateupd="+$("#dateUpdCk").is(":checked"),
+                beforeSend: function( xhr ) {
+                    $('#state_ind').show();
+                }
+            }).done(function() {   
+                seld--;
+                cat_dz.removeClass( "ui-state-highlight" );
+                $("#art_"+art_id).remove();
+                $("#nSelected").text(seld);
+            });
+            
+        },
+        deactivate: function( event, ui ) {
+            $(ui.draggable).removeClass("thumb_frame_ontop");
+        }
+    });
+
+    $("#dropZoneSwitch").click(function(){
+        var hg_calc = 0;
+        $(".dropZone").toggle().each(function(index){            
+            switch(index){
+               case 0:
+                    hg_calc = $(this).height();                    
+                break;
+                case 1:                    
+                    $(this).height(hg_calc-50);
+                break;
+            };
+            
+        });
+    });
+
 });

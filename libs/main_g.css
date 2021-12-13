@@ -149,3 +149,37 @@ a:visited{
 .selected{
     background: grey;
 }
+
+.admin_tb{
+    border-radius: 0px 0px 5px 0px; 
+    background: #eee; 
+    font-family: sans-serif; 
+    position:fixed; 
+    top: 0px; 
+    left: 0px; 
+    z-index:90; 
+    border-right: solid 3px grey;
+    border-bottom: solid 3px grey;
+    padding: 5px;
+}
+
+.admin_cell{
+    display: inline;
+}
+
+.admin_cell_cat{
+    display: inline-block;
+    width: 150px;
+    height: 70px;
+    border: solid 2px grey;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 3px;
+    vertical-align: middle;
+    background-color: lightsteelblue;
+}
+
+.thumb_frame_ontop{
+    z-index: 91;
+    opacity: 0.5;
+}

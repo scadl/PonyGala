@@ -96,18 +96,45 @@ ini_set('display_errors', 0);
 // ADMIN TOOLS FOR GAllERY - START
 if (isset($_SESSION['admin'])) {
 
-    function SerchCategories() {
+    function SerchCategories($mode=0) {
         global $link;
+
+        $no_categories = "Не найдено категорий в БД";
+        $no_db_table = "Не найдена таблица категорий";
+
         $req = mysqli_query($link, "SELECT * FROM categories ORDER BY cat_name");
-        if ($req == TRUE) {
-            while ($row = mysqli_fetch_array($req, MYSQLI_ASSOC)) {
-                print('<option value="' . $row['cat_id'] . '"> ' . $row['cat_name'] . ' </option>');
-            }
-            if (mysqli_num_rows($req) == 0) {
-                print('<option selected value="0"> Не найдено категорий в БД </option>');
-            }
-        } else {
-            print('<option selected value="0"> Не найдена таблица категорий </option>');
+        switch ($mode) {
+            case 0:
+                # Selectable dropbox mode
+                if ($req == TRUE) {
+                    while ($row = mysqli_fetch_array($req, MYSQLI_ASSOC)) {
+                        print('<option value="' . $row['cat_id'] . '"> ' . $row['cat_name'] . ' </option>');
+                    }
+                    if (mysqli_num_rows($req) == 0) {
+                        print('<option selected value="0"> '.$no_categories.' </option>');
+                    }
+                } else {
+                    print('<option selected value="0"> '.$no_db_table.' </option>');
+                }
+                break;
+
+            case 1:
+                # Div block mode
+                if ($req == TRUE) {
+                    while ($row = mysqli_fetch_array($req, MYSQLI_ASSOC)) {
+                        print('<div class="admin_cell_cat" val="' . $row['cat_id'] . '"> ' . $row['cat_name'] . ' </div>');
+                    }
+                    if (mysqli_num_rows($req) == 0) {
+                        print('<div class="admin_cell_cat" val="0"> '.$no_categories.' </div>');
+                    }
+                } else {
+                    print('<option class="admin_cell_cat" val="0"> '.$no_db_table.' </div>');
+                }
+                break;
+            
+            default:
+                # Other modes
+                break;
         }
         unset($req);
         unset($row);
@@ -117,21 +144,27 @@ if (isset($_SESSION['admin'])) {
     <!--<script type="text/javascript" src="libs/functions_g.js"></script>
     <script type="text/javascript" src="libs/ajax_art_manipulation.js"></script>-->
 
-    <table align="center" cellpadding="5" cellspacing="0" border="0" style="border-radius:5px; background: #eee; font-family: sans-serif; position:fixed; top: 0px; left:130px; z-index:90; border: solid 3px grey"> 
-    <tr>
-        <td > Выбрано: </td>
-        <td id="nSelected" align="center" style="width: 20px; font-weight:bold; color:DarkBlue; border-right: solid 3px grey"> 0 </td>
-        <td > Обрабатано: </td>
-        <td id="cAction" align="center" style="width: 20px; font-weight:bold; color:maroon; border-right: solid 3px grey"> 0 </td>
-        <td> Категория: </td>
-        <td> <select style="width:265px;" id="cbCat" > <?php SerchCategories(); ?> </select> </td>
-        <td> Дата: </td>
-        <td> <input type="text" style="width:165px;" id="updtdate" value="<?php print(date("j-m-Y")); ?>">  </td>
-        <td> <input type="checkbox" id="dateUpdCk" title="обновлять дату для выбранных артов" /> Обновить дату </td>
-        <td> <button type="button" id="updtBtn" style='color:blue'>Обновить</button>	 </td>
-        <td> <button type="button" id="delBtn"  style='color:red'>Удалить</button>  </td>
-    </tr>
-    </table>
+    <div align="center" class="admin_tb"> 
+        <div>
+        <div class="admin_cell" > Выбрано: </div>
+        <div class="admin_cell" id="nSelected" align="center" style="width: 20px; font-weight:bold; color:DarkBlue; "> 0 </div>
+        <div class="admin_cell" >; Обрабатано: </div>
+        <div class="admin_cell" id="cAction" align="center" style="width: 20px; font-weight:bold; color:maroon; "> 0 </div>
+        <div class="admin_cell">; Категория: </div>
+        <div class="admin_cell"> <select style="width:265px;" id="cbCat" > <?php SerchCategories(); ?> </select> </div>
+        <div class="admin_cell"> Дата: </div>
+        <div class="admin_cell"> <input type="text" style="width:165px;" id="updtdate" value="<?php print(date("j-m-Y")); ?>">  </div>
+        <div class="admin_cell"> <input type="checkbox" id="dateUpdCk" title="обновлять дату для выбранных артов" /> Обновить дату </div>
+        <div class="admin_cell"> <button type="button" id="updtBtn" style='color:blue'>Обновить</button>	 </div>
+        <div class="admin_cell"> <button type="button" id="delBtn"  style='color:red'>Удалить</button>  </div>
+        <div class="admin_cell"> <button type="button" id="dropZoneSwitch"  style='color:Green' title="Показать\Скрыть дроп-зону категорий"> &crarr; </button>  </div>
+        </div>
+        <div class="dropZone" style="display:none">
+            <?php SerchCategories(1); ?>
+        </div>
+    </div>
+
+    <div class="dropZone" style="display:none;" > </div>
 
     <!-- // ADMIN TOOLS FOR GAllERY - end -->
 <?php } ?>
