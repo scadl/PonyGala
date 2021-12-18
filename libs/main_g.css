@@ -183,3 +183,7 @@ a:visited{
     z-index: 91;
     opacity: 0.5;
 }
+
+.ui-state-disabled, .ui-draggable-disabled { 
+    opacity : 1 !important;
+}

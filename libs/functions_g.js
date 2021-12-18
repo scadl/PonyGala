@@ -1,7 +1,8 @@
 $(document).ready(function(){
 
     var acts = 0;
-    var seld = 0
+    var seld = 0;
+    var sel_allow = true;
 
     $("#updtdate").datepicker({
         showOtherMonths: false,
@@ -16,13 +17,15 @@ $(document).ready(function(){
     }); 
 
     $('.thumb-frame').click(function(){
-        $(this).toggleClass('selected');
-        if($(this).hasClass('selected')){
-            seld++;
-        } else {
-            seld--;
+        if (sel_allow){
+            $(this).toggleClass('selected');
+            if($(this).hasClass('selected')){
+                seld++;
+            } else {
+                seld--;
+            }
+            $("#nSelected").text(seld);
         }
-        $("#nSelected").text(seld);
     });
 
     function UpdtData() {
@@ -75,6 +78,7 @@ $(document).ready(function(){
 
     $('.thumb-frame').draggable({ 
         revert: "invalid",
+        disabled: true,
         drag: function(event, ui){
             $(ui.helper).addClass("thumb_frame_ontop");
         }
@@ -97,7 +101,6 @@ $(document).ready(function(){
                     $('#state_ind').show();
                 }
             }).done(function() {   
-                seld--;
                 cat_dz.removeClass( "ui-state-highlight" );
                 $("#art_"+art_id).remove();
                 $("#nSelected").text(seld);
@@ -118,6 +121,13 @@ $(document).ready(function(){
                 break;
                 case 1:                    
                     $(this).height(hg_calc-50);
+                    sel_allow = !sel_allow;
+
+                    if(!sel_allow){
+                        $('.thumb-frame').draggable("enable");
+                    } else {
+                        $('.thumb-frame').draggable("disable");
+                    }
                 break;
             };
             
