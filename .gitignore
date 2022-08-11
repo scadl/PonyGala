@@ -10,3 +10,4 @@ mods/ads_footer.php
 mods/ads_header.php
 ads.txt
 mods/tweet.json
+mods/webhook_request.log
