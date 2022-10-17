@@ -268,7 +268,7 @@ ini_set('display_errors', 1);
                             </span>    
 
                             <span class="tech_lab btn_right" title="Помогите нашему проекту" style="cursor:pointer;">
-                                <a href='https://sobe.ru/na/artgala' target="_blank">
+                                <a href='https://www.donationalerts.com/r/scadl' target="_blank">
                                     <img src="img/donation.png" width="20" border="0" >
                                 </a>
                             </span>	      
@@ -279,8 +279,8 @@ ini_set('display_errors', 1);
 
                                                        
                             <span class="tech_lab btn_right" title="Подпишись на обновления - не пропускай подборки!" style="cursor:pointer;">
-                                <a href='https://www.facebook.com/groups/655548101805005/' target="_blank">
-                                    <img src="img/fb_clogo.png" width="20" border="0" >
+                                <a href='https://discord.gg/9UsCRbKXMN' target="_blank">
+                                    <img src="img/discord_mono.png" width="20" border="0" >
                                 </a>
                             </span>	      
 

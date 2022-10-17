@@ -105,7 +105,7 @@ function sendResponseWithArt($artCatID, $tgChatID){
     );
 }
 
-function sendLastSelection($tgChatID){
+function sendLastSelection($tgChatID, $categID, $categName){
 
     global $link;
 
@@ -121,7 +121,7 @@ function sendLastSelection($tgChatID){
     while(!$artOk){
 
         $images = array();
-        $rq = "SELECT * FROM arts_pub WHERE addate='".$publication."' ORDER BY rand() LIMIT 5";
+        $rq = "SELECT * FROM arts_pub WHERE category=".$categID." AND addate='".$publication."' ORDER BY rand() LIMIT 5";
         $sql = mysqli_query($link, $rq);
         while ($row = mysqli_fetch_array($sql, MYSQLI_ASSOC)) {
 
@@ -151,7 +151,7 @@ function sendLastSelection($tgChatID){
         array(
             'chat_id' => $tgChatID,
             'parse_mode' => 'MarkdownV2',
-            'text' => 'Это случайные арты от '.date_format($date, "d M Y").'\.'.PHP_EOL.'Тебе понравилось\?',
+            'text' => 'Это 5 артов из категории '.PHP_EOL.'"'.$categName.'" от '.date_format($date, "d M Y").'\.'.PHP_EOL.'Тебе понравилось\?',
             'reply_markup' => array(
                 'keyboard' => array(array('Да, давай еще!', 'Не, давай другие')),
                 'one_time_keyboard' => true,
@@ -161,12 +161,10 @@ function sendLastSelection($tgChatID){
     );
 }
 
-
-function webhookProcess($response){
+function categorySystem($prefix, $sendMode=false, $usrMsg="", $chatID=""){
 
     global $link;
 
-    $val = $response;
     $categories = array();
     $categ_ids = array();
     $cat_num=0;
@@ -180,7 +178,10 @@ function webhookProcess($response){
         }
 
         for($i=0; $i<$cat_num; $i+=2){
-            $cat_format[] = array($categories[$i], $categories[$i+1]);
+            $cat_format[] = array(
+                $prefix .' '. $categories[$i], 
+                $prefix .' '. $categories[$i+1]
+            );
         }
 
         $cat_buttons = array(
@@ -189,6 +190,27 @@ function webhookProcess($response){
             'resize_keyboard'=> true
         );
 
+        if($sendMode){
+            foreach($categories as $cKey => $cVal){
+                if(strpos($usrMsg, $cVal) > 0){
+                    if($prefix == "[К]"){
+                        sendResponseWithArt($categ_ids[$cKey], $chatID);
+                    } elseif ($prefix == "[П]"){
+                        sendLastSelection($chatID, $categ_ids[$cKey], $cVal);
+                    }
+                }
+            }
+        }
+
+        return $cat_buttons;
+}
+
+
+function webhookProcess($response){
+
+    global $link;
+    $val = $response;
+    
     if(property_exists($val, 'message')){
         
         print_r($val->update_id .' '. $val->message->text.'<br>');
@@ -197,28 +219,34 @@ function webhookProcess($response){
         //if(isset($_COOKIE['tg_last_update_id']) && $val->update_id > $_COOKIE['tg_last_update_id']){
 
             if (strpos($val->message->text, "/start") === 0 OR strpos($val->message->text, "Не, давай другие") === 0) {
-                $resultPh = simpleRequest('sendMessage', array(
+                simpleRequest('sendMessage', array(
                     'chat_id' => $val->message->chat->id,
                     'text' => "Привет! Какие арты тебе нравятся?",
-                    'reply_markup' => $cat_buttons
+                    'reply_markup' => categorySystem("[К]")
                 ));
 
                  // Debug - send respones body
                 //simpleRequest('sendMessage', array('chat_id' => $val->message->chat->id, 'text' => $resultPh  ));
             }
             if (strpos($val->message->text, "/last") === 0 OR strpos($val->message->text, "Да, давай еще!") === 0 ) {
-                sendLastSelection($val->message->chat->id);
+                simpleRequest('sendMessage', array(
+                    'chat_id' => $val->message->chat->id,
+                    'text' => "Привет! Какие арты тебе нравятся?",
+                    'reply_markup' => categorySystem("[П]")
+                ));
             }
-            foreach($categories as $cKey => $cVal){
-                if(strpos($val->message->text, $cVal) === 0){
-                    sendResponseWithArt($categ_ids[$cKey], $val->message->chat->id);
-                }
-            }          
+            if(strpos($val->message->text, "[К]") === 0){
+                categorySystem("[К]", true, $val->message->text, $val->message->chat->id);
+            }
+            if(strpos($val->message->text, "[П]") === 0){
+                categorySystem("[П]", true, $val->message->text, $val->message->chat->id);
+            }
+
             if(strpos($val->message->text, "Отличный арт") === 0){
                 simpleRequest('sendMessage', array(
                     'chat_id' => $val->message->chat->id,
                     'text' => 'Мы рады что тебе понравилось.'.PHP_EOL.'Может быть хочешь еще один? '.PHP_EOL.'Выбирай категорию:',
-                    'reply_markup' => $cat_buttons
+                    'reply_markup' => categorySystem("[К]")
                 ));
             }
 
@@ -226,7 +254,7 @@ function webhookProcess($response){
                 simpleRequest('sendMessage', array(
                     'chat_id' => $val->message->chat->id,
                     'text' => 'Нам жаль что тебе не нравится наш выбор. '.PHP_EOL.'Давай попробуем другую категорию:',
-                    'reply_markup' => $cat_buttons
+                    'reply_markup' => categorySystem("[К]")
                 ));
             }
 
