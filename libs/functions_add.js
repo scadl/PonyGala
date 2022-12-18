@@ -16,6 +16,7 @@ var maxart = 0;
 var last_date = 0;
 
 function IniTdAFeed(in_token) {
+    document.getElementById("loadBtn").disabled = true;
     daInt = setTimeout(function () {
         AJasKdA(in_token);
     }, 1000);

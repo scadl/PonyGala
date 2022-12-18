@@ -112,7 +112,9 @@ if (isset($json)) {
                     </span>
                 </div>
 
-                <input type="button" value="<?php print($btnTitle) ?>" onclick="<?php print($btnAction); ?>" style="white-space: normal; width: 150px;" />         
+                <input type="button" id="loadBtn"
+                value="<?php print($btnTitle) ?>" onclick="<?php print($btnAction); ?>" 
+                style="white-space: normal; width: 150px;" />         
 
                 <table id="log">                    
                 </table>	
